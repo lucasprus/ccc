@@ -1,0 +1,18 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="list-group">
+                <a ng-repeat="contentType in contentTypes"
+                    ui-sref=".{{:: contentType.sys.id }}"
+                    ui-sref-active="active"
+                    class="list-group-item">
+                        {{:: contentType.name }}
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <div ui-view></div>
+        </div>
+    </div>
+</div>

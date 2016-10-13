@@ -1,0 +1,53 @@
+<!-- <div ng-if="!excludeActions.add" class="action-panel">
+    <a ui-sref="^.add" role="button" class="btn btn-mc-fill green">{{:: T.ADD }} {{:: labelSingle }}</a>
+</div> -->
+
+<div class="panel panel-info">
+    <div class="panel-heading">{{:: labelPlural }}</div>
+
+    <div ng-if="items.length === 0" class="panel-body text-center">
+        <h4>{{:: T.NO }} {{:: labelPlural }}</h4>
+    </div>
+
+    <div ng-if="items.length > 0" class="panel-body">
+        <div class="text-center" ng-include="'views/pagination.html'"></div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th ng-repeat="displayProperty in listDisplayProperties">
+                        {{:: displayProperty.name }}
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in items">
+                    <td>{{ paginationResultsPerPage * (page - 1) + $index + 1 }}</td>
+                    <td ng-repeat="displayProperty in listDisplayProperties">
+                        {{ item.fields[displayProperty.id]['en-US'] }}
+                    </td>
+                    <td>
+                        <!-- <a ng-if="!excludeActions.detail" ui-sref="^.detail({id: item.id})" role="button" class="btn btn-unstyled" aria-label="{{:: T.DETAILS }}" title="{{:: T.DETAILS }}">
+                            <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+                        </a>
+                        <button ng-if="openDetailModal" ng-click="openDetailModal(item)" type="button" class="btn btn-unstyled" aria-label="{{:: T.DETAILS }}" title="{{:: T.DETAILS }}">
+                            <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+                        </button>
+                        <a ng-if="!excludeActions.edit" ui-sref="^.edit({id: item.id})" role="button" class="btn btn-unstyled" aria-label="{{:: T.EDIT }}" title="{{:: T.EDIT }}">
+                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </a>
+                        <button ng-if="!excludeActions.delete" ng-click="deleteItem(item.id)" type="button" class="btn btn-unstyled red" aria-label="{{:: T.DELETE }}" title="{{:: T.DELETE }}">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </button> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="text-center" ng-include="'views/pagination.html'"></div>
+    </div>
+</div>
+
+<pre>{{ items | json }}</pre>
