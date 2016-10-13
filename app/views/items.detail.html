@@ -1,0 +1,31 @@
+<div class="panel panel-info">
+    <div class="panel-heading">{{:: labelSingle }}</div>
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-8">
+                <form class="form-horizontal">
+                    <div class="form-group" ng-repeat="control in formControls">
+                        <label class="col-sm-4 control-label">{{:: control.name }}</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static">{{:: item.fields[control.name]['en-US'] }}</p>
+
+                            <!-- <p ng-if="control.type === 'Symbol'" class="form-control-static">{{:: item.fields[control.name]['en-US'] }}</p>
+
+                            <p ng-if="control.type === 'Date'" class="form-control-static">{{:: item.fields[control.name]['en-US'] | date }}</p> -->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <a ui-sref="^.edit({id: item.sys.id})" role="button" class="btn btn-default">{{:: T.EDIT }}</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<pre>{{ item | json }}</pre>
+<pre>{{ formControls | json }}</pre>

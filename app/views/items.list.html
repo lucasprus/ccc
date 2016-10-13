@@ -29,10 +29,10 @@
                         {{ item.fields[displayProperty.id]['en-US'] }}
                     </td>
                     <td>
-                        <!-- <a ng-if="!excludeActions.detail" ui-sref="^.detail({id: item.id})" role="button" class="btn btn-unstyled" aria-label="{{:: T.DETAILS }}" title="{{:: T.DETAILS }}">
+                        <a ui-sref="^.detail({id: item.sys.id})" role="button" class="btn btn-default" aria-label="{{:: T.DETAILS }}" title="{{:: T.DETAILS }}">
                             <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
                         </a>
-                        <button ng-if="openDetailModal" ng-click="openDetailModal(item)" type="button" class="btn btn-unstyled" aria-label="{{:: T.DETAILS }}" title="{{:: T.DETAILS }}">
+                        <!-- <button ng-if="openDetailModal" ng-click="openDetailModal(item)" type="button" class="btn btn-unstyled" aria-label="{{:: T.DETAILS }}" title="{{:: T.DETAILS }}">
                             <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
                         </button>
                         <a ng-if="!excludeActions.edit" ui-sref="^.edit({id: item.id})" role="button" class="btn btn-unstyled" aria-label="{{:: T.EDIT }}" title="{{:: T.EDIT }}">

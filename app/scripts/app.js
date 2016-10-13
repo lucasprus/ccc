@@ -67,26 +67,26 @@ angular
                     params: {
                         page: 1
                     }
+                })
+                /*.state('admin.' + id + '.add', {
+                    url: '/add',
+                    templateUrl: 'views/items.addEdit.html',
+                    controller: 'ItemsAddEditCtrl',
+                    params: {mode: 'add'}
+                })
+                .state('admin.' + id + '.edit', {
+                    url: '/edit/:id',
+                    templateUrl: 'views/items.addEdit.html',
+                    controller: 'ItemsAddEditCtrl',
+                    params: {mode: 'edit'}
+                })*/
+                .state('admin.' + id + '.detail', {
+                    url: '/detail/:id',
+                    templateUrl: 'views/items.detail.html',
+                    controller: 'ItemsDetailCtrl'
                 });
         });
 
-        /*.state('admin.' + 'test' + '.add', {
-            url: '/add',
-            templateUrl: 'views/items.addEdit.html',
-            controller: 'ItemsAddEditCtrl',
-            params: {mode: 'add'}
-        })
-        .state('admin.' + 'test' + '.edit', {
-            url: '/edit/:id',
-            templateUrl: 'views/items.addEdit.html',
-            controller: 'ItemsAddEditCtrl',
-            params: {mode: 'edit'}
-        })
-        .state('admin.' + 'test' + '.detail', {
-            url: '/detail/:id',
-            templateUrl: 'views/items.detail.html',
-            controller: 'ItemsDetailCtrl'
-        });*/
     }])
     .run(['$http', function($http) {
         $http.defaults.headers.common.Authorization = 'Bearer ef7b0d42ac9b1ca71be8137f1c406c6c489d2678ff16135ddea89f75561d3cc1';
