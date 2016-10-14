@@ -18,7 +18,7 @@ angular
     ])
     .constant('CONFIG', {
         apiURL: 'https://api.contentful.com/spaces/in1ws0j2cnhw/',
-        paginationResultsPerPage: 10,
+        paginationResultsPerPage: 5,
         paginationLinksOffset: 3
     })
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
@@ -64,9 +64,7 @@ angular
                     url: '/list',
                     templateUrl: 'views/items.list.html',
                     controller: 'ItemsListCtrl',
-                    params: {
-                        page: 1
-                    }
+                    params: {page: 1}
                 })
                 /*.state('admin.' + id + '.add', {
                     url: '/add',
