@@ -1,0 +1,55 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">{{:: mode + ' ' + labelSingle }}</div>
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-8">
+                <form name="form" ng-submit="form.$valid ? submit() : setControlsToDirty(form)" class="form-horizontal" novalidate>
+                    <div class="form-group" ng-repeat="control in formControls" ng-class="{'has-error': !form[control.name].$pristine && form[control.name].$invalid}">
+                        <label for="{{:: control.name }}" class="col-sm-4 control-label">{{:: control.name }}</label>
+
+                        <div class="col-sm-8">
+                            <input ng-if="control.type === 'Symbol'"
+                                class="form-control"
+                                type="text"
+                                name="{{:: control.name }}"
+                                id="{{:: control.name }}"
+                                ng-model="item[control.id]['en-US']"
+                                ng-pattern="control.validation.regexp.pattern"
+                                ng-required="control.required">
+
+                            <input ng-if="control.type === 'Date'"
+                                class="form-control"
+                                type="date"
+                                name="{{:: control.name }}"
+                                id="{{:: control.name }}"
+                                ng-model="item[control.id]['en-US']"
+                                ng-required="control.required"
+                                date-to-int>
+
+                            <div ng-if="control.type === 'Boolean'" class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                        name="{{:: control.name }}"
+                                        id="{{:: control.name }}"
+                                        ng-model="item[control.id]['en-US']"
+                                        ng-true-value="true" ng-false-value="false">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <button type="submit" class="btn btn-primary" ng-class="{disabled: form.$invalid}" ng-disabled="requestInProgress">{{:: primaryButtonLabel }}</button>
+                            <a ui-sref="{{:: returnState || '^.list' }}" role="button" class="btn btn-default">{{:: T.CANCEL }}</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<pre>{{ item | json }}</pre>
+<pre>{{ formControls | json }}</pre>

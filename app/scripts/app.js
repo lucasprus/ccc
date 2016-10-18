@@ -21,6 +21,30 @@ angular
         paginationResultsPerPage: 5,
         paginationLinksOffset: 3
     })
+    .config(['$httpProvider', function($httpProvider) {
+        $httpProvider.interceptors.push(['$rootScope', 'Utilities', '$q', function($rootScope, Utilities, $q) {
+            return {
+                response: function(response) {
+                    var successMessage = response.config.successMessage;
+
+                    if (successMessage) {
+                        Utilities.handlers.success(successMessage);
+                    }
+
+                    return response;
+                },
+                responseError: function(rejection) {
+                    var errorMessage = rejection.config.errorMessage;
+
+                    if (errorMessage) {
+                        Utilities.handlers.error(errorMessage, rejection.data);
+                    }
+
+                    return $q.reject(rejection);
+                }
+            };
+        }]);
+    }])
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider
             .when('', '/')
@@ -66,7 +90,7 @@ angular
                     controller: 'ItemsListCtrl',
                     params: {page: 1}
                 })
-                /*.state('admin.' + id + '.add', {
+                .state('admin.' + id + '.add', {
                     url: '/add',
                     templateUrl: 'views/items.addEdit.html',
                     controller: 'ItemsAddEditCtrl',
@@ -77,7 +101,7 @@ angular
                     templateUrl: 'views/items.addEdit.html',
                     controller: 'ItemsAddEditCtrl',
                     params: {mode: 'edit'}
-                })*/
+                })
                 .state('admin.' + id + '.detail', {
                     url: '/detail/:id',
                     templateUrl: 'views/items.detail.html',

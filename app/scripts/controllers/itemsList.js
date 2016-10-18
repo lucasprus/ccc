@@ -65,21 +65,28 @@ angular.module('contentfulCustomCmsApp')
         });
 
         var deleteItem = function(sys) {
+            var version = sys.version;
+            var id = sys.id;
+
             var deleteConfig = {
                 successMessage: labelSingle + T.HTTP_DELETE_SUCCESS_NOTIFICATION,
                 errorMessage: T.HTTP_DELETE_ERROR_NOTIFICATION + labelSingle,
-                'X-Contentful-Version': sys.version
+                headers: {
+                    'X-Contentful-Version': version
+                }
             };
 
             var archiveConfig = {
                 successMessage: labelSingle + T.HTTP_PUT_SUCCESS_NOTIFICATION,
                 errorMessage: T.HTTP_PUT_ERROR_NOTIFICATION + labelSingle,
-                'X-Contentful-Version': sys.version
+                headers: {
+                    'X-Contentful-Version': version
+                }
             };
 
-            $http.delete(CONFIG.apiURL + 'entries/' + sys.id + '/published', deleteConfig).then(function() {
-                $http.put(CONFIG.apiURL + 'entries/' + sys.id + '/archived', archiveConfig).then(function() {
-                    $state.go('.', {page: 1});
+            $http.delete(CONFIG.apiURL + 'entries/' + id + '/published', deleteConfig).then(function() {
+                $http.put(CONFIG.apiURL + 'entries/' + id + '/archived', null, archiveConfig).then(function() {
+                    $state.go('.', {page: 1}, {reload: $state.current});
                 });
             });
         };

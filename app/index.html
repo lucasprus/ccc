@@ -54,6 +54,9 @@
       </div>
     </div>
 
+    <div alert-messages style="position: fixed; bottom: 0; right: 0; z-index: 1000">
+    </div>
+
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -72,7 +75,12 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/itemsList.js"></script>
         <script src="scripts/controllers/itemsDetail.js"></script>
+        <script src="scripts/controllers/itemsAddEdit.js"></script>
         <script src="scripts/services/enLanguagePack.js"></script>
+        <script src="scripts/services/utilities.js"></script>
+        <script src="scripts/services/alertMessages.js"></script>
+        <script src="scripts/directives/alertMessages.js"></script>
+        <script src="scripts/directives/dateToInt.js"></script>
         <!-- endbuild -->
 
     <script>
