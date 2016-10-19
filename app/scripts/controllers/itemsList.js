@@ -12,7 +12,7 @@ angular.module('contentfulCustomCmsApp')
         var contentType = $stateParams.contentType;
 
         var contentTypeId = contentType.sys.id;
-        var endpoint = 'entries?content_type=' + contentTypeId + '&sys.publishedVersion[exists]=true';
+        var endpoint = 'entries?content_type=' + contentTypeId;
 
         var page = $stateParams.page || 1;
         $scope.page = page;
@@ -53,7 +53,7 @@ angular.module('contentfulCustomCmsApp')
             errorMessage: T.HTTP_GET_ERROR_NOTIFICATION + labelPlural
         };
 
-        $http.get(CONFIG.apiURL + endpoint + '&skip=' + paginationResultsPerPage * (page - 1) + '&limit=' + paginationResultsPerPage, config).then(function(data) {
+        $http.get(CONFIG.cdApiUrl + endpoint + '&skip=' + paginationResultsPerPage * (page - 1) + '&limit=' + paginationResultsPerPage, config).then(function(data) {
             var resultsTotal = data.data.total;
 
             var pagesTotal = Math.ceil(resultsTotal / paginationResultsPerPage);
@@ -84,8 +84,8 @@ angular.module('contentfulCustomCmsApp')
                 }
             };
 
-            $http.delete(CONFIG.apiURL + 'entries/' + id + '/published', deleteConfig).then(function() {
-                $http.put(CONFIG.apiURL + 'entries/' + id + '/archived', null, archiveConfig).then(function() {
+            $http.delete(CONFIG.cmApiUrl + 'entries/' + id + '/published', deleteConfig).then(function() {
+                $http.put(CONFIG.cmApiUrl + 'entries/' + id + '/archived', null, archiveConfig).then(function() {
                     $state.go('.', {page: 1}, {reload: $state.current});
                 });
             });

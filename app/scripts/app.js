@@ -17,13 +17,25 @@ angular
         'ui.bootstrap'
     ])
     .constant('CONFIG', {
-        apiURL: 'https://api.contentful.com/spaces/in1ws0j2cnhw/',
+        // Content management API URL
+        cmApiUrl: 'https://api.contentful.com/spaces/in1ws0j2cnhw/',
+        // Content delivery API URL
+        cdApiUrl: 'https://cdn.contentful.com/spaces/in1ws0j2cnhw/',
         paginationResultsPerPage: 5,
         paginationLinksOffset: 3
     })
     .config(['$httpProvider', function($httpProvider) {
-        $httpProvider.interceptors.push(['$rootScope', 'Utilities', '$q', function($rootScope, Utilities, $q) {
+        $httpProvider.interceptors.push(['Utilities', '$q', function(Utilities, $q) {
             return {
+                request: function(config) {
+                    if (config.url.indexOf('api.contentful.com') > -1) {
+                        config.headers.Authorization = 'Bearer ef7b0d42ac9b1ca71be8137f1c406c6c489d2678ff16135ddea89f75561d3cc1';
+                    } else if (config.url.indexOf('cdn.contentful.com') > -1) {
+                        config.headers.Authorization = 'Bearer 65b166a614d28895f64a03f6268f03f052421598fd950bc576982d6ca71486b0';
+                    }
+
+                    return config;
+                },
                 response: function(response) {
                     var successMessage = response.config.successMessage;
 
@@ -109,9 +121,6 @@ angular
                 });
         });
 
-    }])
-    .run(['$http', function($http) {
-        $http.defaults.headers.common.Authorization = 'Bearer ef7b0d42ac9b1ca71be8137f1c406c6c489d2678ff16135ddea89f75561d3cc1';
     }])
     .run(['$rootScope', '$state', '$timeout', function($rootScope, $state, $timeout) {
         $rootScope.$on('$stateChangeStart', function(evt, to, params) {

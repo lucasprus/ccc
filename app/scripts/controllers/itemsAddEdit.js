@@ -31,11 +31,13 @@ angular.module('contentfulCustomCmsApp')
             formControls.forEach(function(control) {
                 var id = control.id;
 
-                fields[id] = $scope.item[id];
+                fields[id] = {
+                    'en-US': $scope.item[id]
+                };
 
                 /*if (control.type === 'file' && angular.isObject(result[name])) {
                     result[name] = Upload.upload({
-                        url: CONFIG.apiURL + 'upload',
+                        url: CONFIG.cmApiUrl + 'upload',
                         data: {file: result[name]}
                     }).then(function(data) {
                         return data.data.url;
@@ -44,7 +46,7 @@ angular.module('contentfulCustomCmsApp')
 
                 if (control.type === 'image' && result[name] && result[name].indexOf('data:') === 0) {
                     result[name] = Upload.upload({
-                        url: CONFIG.apiURL + 'upload',
+                        url: CONFIG.cmApiUrl + 'upload',
                         data: {file: Upload.dataUrltoBlob(result[name], $scope.item.imageFile.name)}
                     }).then(function(data) {
                         return data.data.url;
@@ -73,7 +75,7 @@ angular.module('contentfulCustomCmsApp')
                 };
 
                 $q.all(dataToPost()).then(function(dataToPost) {
-                    return $http.post(CONFIG.apiURL + 'entries', dataToPost, config).then(function(data) {
+                    return $http.post(CONFIG.cmApiUrl + 'entries', dataToPost, config).then(function(data) {
                         var sys = data.data.sys;
 
                         var config = {
@@ -84,10 +86,10 @@ angular.module('contentfulCustomCmsApp')
                             }
                         };
 
-                        return $http.put(CONFIG.apiURL + 'entries/' + sys.id + '/published', null, config).then(function() {
+                        return $http.put(CONFIG.cmApiUrl + 'entries/' + sys.id + '/published', null, config).then(function() {
                             $state.go(returnState || '^.list');
                         }, function() {
-                            return $http.delete(CONFIG.apiURL + 'entries/' + sys.id);
+                            return $http.delete(CONFIG.cmApiUrl + 'entries/' + sys.id);
                         });
                     });
                 }).finally(function() {
@@ -98,7 +100,7 @@ angular.module('contentfulCustomCmsApp')
             $scope.primaryButtonLabel = T.ADD;
         } else if (mode === 'edit') {
             var id = $stateParams.id;
-            var itemEndpoint = CONFIG.apiURL + endpoint + '/' + id;
+            var itemEndpoint = CONFIG.cdApiUrl + endpoint + '/' + id;
             var sys;
 
             var config = {
@@ -117,7 +119,10 @@ angular.module('contentfulCustomCmsApp')
                 });*/
 
                 $scope.item = item.fields;
-                sys = item.sys;
+            });
+
+            $http.get(CONFIG.cmApiUrl + endpoint + '/' + id, config).then(function(data) {
+                sys = data.data.sys;
             });
 
             $scope.submit = function() {
@@ -135,16 +140,18 @@ angular.module('contentfulCustomCmsApp')
                 };
 
                 $q.all(dataToPost()).then(function(dataToPost) {
-                    return $http.put(itemEndpoint, dataToPost, config).then(function(data) {
+                    return $http.put(CONFIG.cmApiUrl + endpoint + '/' + id, dataToPost, config).then(function(data) {
+                        sys = data.data.sys;
+
                         var config = {
                             successMessage: labelSingle + T.HTTP_PUT_SUCCESS_NOTIFICATION,
                             errorMessage: T.HTTP_PUT_ERROR_NOTIFICATION + labelSingle,
                             headers: {
-                                'X-Contentful-Version': data.data.sys.version
+                                'X-Contentful-Version': sys.version
                             }
                         };
 
-                        return $http.put(CONFIG.apiURL + 'entries/' + id + '/published', null, config).then(function() {
+                        return $http.put(CONFIG.cmApiUrl + 'entries/' + id + '/published', null, config).then(function() {
                             $state.go(returnState || '^.list');
                         });
                     });
@@ -162,7 +169,7 @@ angular.module('contentfulCustomCmsApp')
 
         /*formControls.forEach(function(control) {
             if (control.endpoint) {
-                $http.get(CONFIG.apiURL + control.endpoint).then(function(data) {
+                $http.get(CONFIG.cmApiUrl + control.endpoint).then(function(data) {
                     control.options = control.optionsFilter ? Filters[control.optionsFilter](data.data) : data.data;
                 });
             }

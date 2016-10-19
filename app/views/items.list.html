@@ -28,7 +28,7 @@
                 <tr ng-repeat="item in items">
                     <td>{{ paginationResultsPerPage * (page - 1) + $index + 1 }}</td>
                     <td ng-repeat="displayProperty in listDisplayProperties">
-                        {{ item.fields[displayProperty.id]['en-US'] }}
+                        {{ item.fields[displayProperty.id] }}
                     </td>
                     <td>
                         <a ui-sref="^.detail({id: item.sys.id})" role="button" class="btn btn-default" aria-label="{{:: T.DETAILS }}" title="{{:: T.DETAILS }}">

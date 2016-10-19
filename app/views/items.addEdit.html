@@ -14,7 +14,7 @@
                                 type="text"
                                 name="{{:: control.name }}"
                                 id="{{:: control.name }}"
-                                ng-model="item[control.id]['en-US']"
+                                ng-model="item[control.id]"
                                 ng-pattern="control.validation.regexp.pattern"
                                 ng-required="control.required">
 
@@ -23,7 +23,7 @@
                                 type="date"
                                 name="{{:: control.name }}"
                                 id="{{:: control.name }}"
-                                ng-model="item[control.id]['en-US']"
+                                ng-model="item[control.id]"
                                 ng-required="control.required"
                                 date-to-int>
 
@@ -32,7 +32,7 @@
                                     <input type="checkbox"
                                         name="{{:: control.name }}"
                                         id="{{:: control.name }}"
-                                        ng-model="item[control.id]['en-US']"
+                                        ng-model="item[control.id]"
                                         ng-true-value="true" ng-false-value="false">
                                 </label>
                             </div>

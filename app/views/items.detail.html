@@ -8,11 +8,11 @@
                     <div class="form-group" ng-repeat="control in formControls">
                         <label class="col-sm-4 control-label">{{:: control.name }}</label>
                         <div class="col-sm-8">
-                            <p ng-if="control.type === 'Symbol'" class="form-control-static">{{:: item.fields[control.name]['en-US'] }}</p>
+                            <p ng-if="control.type === 'Symbol'" class="form-control-static">{{:: item.fields[control.name] }}</p>
 
-                            <p ng-if="control.type === 'Date'" class="form-control-static">{{:: item.fields[control.name]['en-US'] | date }}</p>
+                            <p ng-if="control.type === 'Date'" class="form-control-static">{{:: item.fields[control.name] | date }}</p>
 
-                            <p ng-if="control.type === 'Boolean'" class="form-control-static">{{:: item.fields[control.name]['en-US'] ? 'true' : 'false' }}</p>
+                            <p ng-if="control.type === 'Boolean'" class="form-control-static">{{ item.fields[control.name] ? 'true' : 'false' }}</p>
                         </div>
                     </div>
 

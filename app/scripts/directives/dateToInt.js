@@ -14,7 +14,13 @@ angular.module('contentfulCustomCmsApp')
             link: function postLink(scope, element, attrs, ngModel) {
                 ngModel.$formatters.push(function(value) {
                     if (value) {
-                        return new Date(value);
+                        var d = new Date(value);
+
+                        if (d.toString() === 'Invalid Date') {
+                            d = new Date(parseInt(value, 10));
+                        }
+
+                        return d;
                     }
 
                     return null;
