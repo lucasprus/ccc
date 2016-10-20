@@ -33,6 +33,17 @@
             </button>
 
             <a class="navbar-brand" ui-sref="home">Contentful custom CMS</a>
+
+            <form class="navbar-form navbar-right" ng-controller="LanguageSelectCtrl">
+                <div class="form-group">
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="$root.locale" ng-change="setLocaleAndReload()" value="en-gb"> English
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="$root.locale" ng-change="setLocaleAndReload()" value="de-de"> Deutsch
+                    </label>
+                </div>
+            </form>
           </div>
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
@@ -68,6 +79,7 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -76,7 +88,9 @@
         <script src="scripts/controllers/itemsList.js"></script>
         <script src="scripts/controllers/itemsDetail.js"></script>
         <script src="scripts/controllers/itemsAddEdit.js"></script>
+        <script src="scripts/controllers/languageSelect.js"></script>
         <script src="scripts/services/enLanguagePack.js"></script>
+        <script src="scripts/services/deLanguagePack.js"></script>
         <script src="scripts/services/utilities.js"></script>
         <script src="scripts/services/alertMessages.js"></script>
         <script src="scripts/directives/alertMessages.js"></script>

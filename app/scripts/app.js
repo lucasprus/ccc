@@ -10,6 +10,7 @@
  */
 angular
     .module('contentfulCustomCmsApp', [
+        'ngCookies',
         'ngAnimate',
         'ngSanitize',
         'ngTouch',
@@ -133,7 +134,16 @@ angular
             }
         });
     }])
-    .run(['$rootScope', 'ENLanguagePack', function($rootScope, ENLanguagePack) {
-        $rootScope.T = ENLanguagePack;
+    .run(['$rootScope', 'ENLanguagePack', 'DELanguagePack', '$cookies', function($rootScope, ENLanguagePack, DELanguagePack, $cookies) {
+        var locale = $cookies.get('locale');
+
+        if (locale === 'de-de') {
+            $rootScope.locale = 'de-de';
+            $rootScope.T = DELanguagePack;
+        } else {
+            $cookies.put('locale', 'en-gb');
+            $rootScope.locale = 'en-gb';
+            $rootScope.T = ENLanguagePack;
+        }
     }]);
 
