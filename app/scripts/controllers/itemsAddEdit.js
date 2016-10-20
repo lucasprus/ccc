@@ -67,7 +67,6 @@ angular.module('contentfulCustomCmsApp')
                 $scope.requestInProgress = true;
 
                 var config = {
-                    successMessage: labelSingle + T.HTTP_POST_SUCCESS_NOTIFICATION,
                     errorMessage: T.HTTP_POST_ERROR_NOTIFICATION + labelSingle,
                     headers: {
                         'X-Contentful-Content-Type': contentType.sys.id
@@ -79,8 +78,8 @@ angular.module('contentfulCustomCmsApp')
                         var sys = data.data.sys;
 
                         var config = {
-                            successMessage: labelSingle + T.HTTP_PUT_SUCCESS_NOTIFICATION,
-                            errorMessage: T.HTTP_PUT_ERROR_NOTIFICATION + labelSingle,
+                            successMessage: labelSingle + T.HTTP_POST_SUCCESS_NOTIFICATION,
+                            errorMessage: T.HTTP_POST_ERROR_NOTIFICATION + labelSingle,
                             headers: {
                                 'X-Contentful-Version': sys.version
                             }
@@ -132,7 +131,6 @@ angular.module('contentfulCustomCmsApp')
                 $scope.requestInProgress = true;
 
                 var config = {
-                    successMessage: labelSingle + T.HTTP_PUT_SUCCESS_NOTIFICATION,
                     errorMessage: T.HTTP_PUT_ERROR_NOTIFICATION + labelSingle,
                     headers: {
                         'X-Contentful-Version': sys.version

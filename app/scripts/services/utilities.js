@@ -23,7 +23,7 @@ angular.module('contentfulCustomCmsApp')
             handlers: {
                 error: function(message, data) {
                     if (data) {
-                        message += ': ' + data.error;
+                        message += ': ' + data.message;
 
                         if (data.code) {
                             message += ' [ ' + data.code + ' ]';

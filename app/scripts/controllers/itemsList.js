@@ -69,6 +69,13 @@ angular.module('contentfulCustomCmsApp')
             var id = sys.id;
 
             var deleteConfig = {
+                errorMessage: T.HTTP_DELETE_ERROR_NOTIFICATION + labelSingle,
+                headers: {
+                    'X-Contentful-Version': version
+                }
+            };
+
+            var putConfig = {
                 successMessage: labelSingle + T.HTTP_DELETE_SUCCESS_NOTIFICATION,
                 errorMessage: T.HTTP_DELETE_ERROR_NOTIFICATION + labelSingle,
                 headers: {
@@ -76,16 +83,8 @@ angular.module('contentfulCustomCmsApp')
                 }
             };
 
-            var archiveConfig = {
-                successMessage: labelSingle + T.HTTP_PUT_SUCCESS_NOTIFICATION,
-                errorMessage: T.HTTP_PUT_ERROR_NOTIFICATION + labelSingle,
-                headers: {
-                    'X-Contentful-Version': version
-                }
-            };
-
             $http.delete(CONFIG.cmApiUrl + 'entries/' + id + '/published', deleteConfig).then(function() {
-                $http.put(CONFIG.cmApiUrl + 'entries/' + id + '/archived', null, archiveConfig).then(function() {
+                $http.put(CONFIG.cmApiUrl + 'entries/' + id + '/archived', null, putConfig).then(function() {
                     $state.go('.', {page: 1}, {reload: $state.current});
 
                     /*var t = (function xxx() {
