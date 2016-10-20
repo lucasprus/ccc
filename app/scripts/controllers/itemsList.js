@@ -8,11 +8,11 @@
  * Controller of the contentfulCustomCmsApp
  */
 angular.module('contentfulCustomCmsApp')
-    .controller('ItemsListCtrl', ['$scope', 'CONFIG', '$stateParams', '$http', '$uibModal', '$state', function($scope, CONFIG, $stateParams, $http, $uibModal, $state) {
+    .controller('ItemsListCtrl', ['$scope', 'CONFIG', '$stateParams', '$http', '$uibModal', '$state', '$timeout', function($scope, CONFIG, $stateParams, $http, $uibModal, $state, $timeout) {
         var contentType = $stateParams.contentType;
 
         var contentTypeId = contentType.sys.id;
-        var endpoint = 'entries?content_type=' + contentTypeId;
+        var endpoint = 'entries?content_type=' + contentTypeId + '&sys.type[ne]=' + (new Date()).valueOf();
 
         var page = $stateParams.page || 1;
         $scope.page = page;
@@ -87,6 +87,20 @@ angular.module('contentfulCustomCmsApp')
             $http.delete(CONFIG.cmApiUrl + 'entries/' + id + '/published', deleteConfig).then(function() {
                 $http.put(CONFIG.cmApiUrl + 'entries/' + id + '/archived', null, archiveConfig).then(function() {
                     $state.go('.', {page: 1}, {reload: $state.current});
+
+                    /*var t = (function xxx() {
+                        return $timeout(function() {
+                            $http.get(CONFIG.cdApiUrl + 'entries?sys.id=' + data.data.sys.id).then(function(data) {
+                                if (data.data.items.length === 0) {
+                                    $timeout(function() {
+                                        $state.go('.', {page: 1}, {reload: $state.current});
+                                    });
+                                } else {
+                                    t = xxx();
+                                }
+                            });
+                        }, 1000);
+                    })();*/
                 });
             });
         };

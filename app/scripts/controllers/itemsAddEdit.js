@@ -100,7 +100,7 @@ angular.module('contentfulCustomCmsApp')
             $scope.primaryButtonLabel = T.ADD;
         } else if (mode === 'edit') {
             var id = $stateParams.id;
-            var itemEndpoint = CONFIG.cdApiUrl + endpoint + '/' + id;
+            var itemEndpoint = CONFIG.cdApiUrl + endpoint + '/' + id + '?sys.type[ne]=' + (new Date()).valueOf();
             var sys;
 
             var config = {
@@ -121,7 +121,7 @@ angular.module('contentfulCustomCmsApp')
                 $scope.item = item.fields;
             });
 
-            $http.get(CONFIG.cmApiUrl + endpoint + '/' + id, config).then(function(data) {
+            $http.get(CONFIG.cmApiUrl + endpoint + '/' + id + '?sys.type[ne]=' + (new Date()).valueOf(), config).then(function(data) {
                 sys = data.data.sys;
             });
 

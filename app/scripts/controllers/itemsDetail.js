@@ -11,7 +11,7 @@ angular.module('contentfulCustomCmsApp')
     .controller('ItemsDetailCtrl', ['$scope', '$http', '$stateParams', 'CONFIG', function($scope, $http, $stateParams, CONFIG) {
         var contentType = $stateParams.contentType;
 
-        var itemEndpoint = CONFIG.cdApiUrl + 'entries/' + $stateParams.id;
+        var itemEndpoint = CONFIG.cdApiUrl + 'entries/' + $stateParams.id + '?sys.type[ne]=' + (new Date()).valueOf();
 
         var T = $scope.$root.T;
         var labelSingle = contentType.name + ' single';
