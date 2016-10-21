@@ -32,7 +32,7 @@ angular.module('contentfulCustomCmsApp')
                 var id = control.id;
 
                 fields[id] = {
-                    'en-US': $scope.item[id]
+                    'en': $scope.item[id]
                 };
 
                 /*if (control.type === 'file' && angular.isObject(result[name])) {
@@ -173,15 +173,4 @@ angular.module('contentfulCustomCmsApp')
             }
         });*/
         $scope.formControls = formControls;
-
-        $scope.get = _.get;
-        $scope.find = _.find;
-
-        $scope.required = function(required) {
-            if (!required) {
-                return;
-            }
-
-            return required.when && $scope.$root.user && $scope.$root.user[required.when] || required.when && $scope.item[required.when] || required.value;
-        };
     }]);

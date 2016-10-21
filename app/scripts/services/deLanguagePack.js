@@ -10,6 +10,7 @@
 angular.module('contentfulCustomCmsApp')
     .constant('DELanguagePack', (function() {
         var translations = {
+            HOME: 'Home [NT]',
             HELLO: 'Hallo',
             BUYING_SECTION_HEADER: 'Kaufen',
             SELLING_SECTION_HEADER: 'Verkaufen',
@@ -35,7 +36,7 @@ angular.module('contentfulCustomCmsApp')
             ITEMS: 'Einheiten',
             SHOPPING_CARTS: 'Einkaufswägen',
             DELETE_ITEM: 'Einheit löschen',
-            DELETE_CONFIRMATION: 'Sind Sie sicher, dass Sie diese Einheit löschen möchten?',
+            SURE_TO_DELETE: 'Sind Sie sicher, dass Sie diese Einheit löschen möchten?',
             CANCEL: 'Abbrechen',
             DELETE: 'Löschen',
             ITEM_DETAIL: 'Details zur Einheit',
@@ -265,6 +266,7 @@ angular.module('contentfulCustomCmsApp')
             // 404 page
             PAGE_NOT_FOUND: 'Seite nicht gefunden',
             BACK_TO_MAIN_PAGE: 'Zurück zur Startseite',
+            PAGE_NOT_EXIST: 'The page doesn\'t exist or you don\'t have access permission to view it [NT]',
 
             // Password reset
             FORGOT_YOUR_PASSWORD: 'Passwort vergessen',

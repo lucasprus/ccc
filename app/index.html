@@ -1,87 +1,86 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
-  </head>
-  <body>
-    <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>Contentful custom CMS</title>
+        <meta name="description" content="Contentful custom CMS">
+        <meta name="viewport" content="width=device-width">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css(.) styles/vendor.css -->
+        <!-- bower:css -->
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
+    </head>
 
-    <!-- Add your site or application content here -->
-    <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
+    <body>
+        <!--[if lte IE 8]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
 
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+        <!-- Add your site or application content here -->
+        <div class="header">
+            <div class="navbar navbar-inverse" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
 
-            <a class="navbar-brand" ui-sref="home">Contentful custom CMS</a>
+                        <a class="navbar-brand" ui-sref="home">Contentful custom CMS</a>
 
-            <form class="navbar-form navbar-right" ng-controller="LanguageSelectCtrl">
-                <div class="form-group">
-                    <label class="radio-inline">
-                        <input type="radio" ng-model="$root.locale" ng-change="setLocaleAndReload()" value="en-gb"> English
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" ng-model="$root.locale" ng-change="setLocaleAndReload()" value="de-de"> Deutsch
-                    </label>
+                        <form class="navbar-form navbar-right form-inline" ng-controller="LanguageSelectCtrl">
+                            <div class="form-group">
+                                <label class="radio-inline">
+                                    <input type="radio" ng-model="$root.locale" ng-change="setLocaleAndReload()" value="en-gb"> English
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" ng-model="$root.locale" ng-change="setLocaleAndReload()" value="de-de"> Deutsch
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="js-navbar-collapse">
+
+                        <ul class="nav navbar-nav ng-cloak">
+                            <li ui-sref-active="active"><a ui-sref="home">{{:: T.HOME }}</a></li>
+                            <li ui-sref-active="active"><a ui-sref="admin">{{:: T.ADMIN }}</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </form>
-          </div>
-
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-            <ul class="nav navbar-nav">
-                <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
-                <li ui-sref-active="active"><a ui-sref="admin">Admin</a></li>
-            </ul>
-          </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="container-fluid" ui-view></div>
+        <div class="container-fluid" ui-view></div>
 
-    <div class="footer">
-      <div class="container">
-        <p><span class="glyphicon glyphicon-copyright-mark"></span> stanwood GmbH</p>
-      </div>
-    </div>
+        <div class="footer">
+            <div class="container">
+                <p><span class="glyphicon glyphicon-copyright-mark"></span> stanwood GmbH</p>
+            </div>
+        </div>
 
-    <div alert-messages style="position: fixed; bottom: 0; right: 0; z-index: 1000">
-    </div>
+        <div alert-messages style="position: fixed; bottom: 0; right: 0; z-index: 1000"></div>
 
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/lodash/lodash.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+        <!-- build:js(.) scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-touch/angular-touch.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="bower_components/lodash/lodash.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
@@ -97,21 +96,26 @@
         <script src="scripts/directives/dateToInt.js"></script>
         <!-- endbuild -->
 
-    <script>
-        (function() {
-            var injector = angular.injector(['ng']);
+        <script type="text/javascript">
+            (function() {
+                var injector = angular.injector(['ng']);
 
-            injector.invoke(['$http', '$window', function($http, $window) {
-                $http.get('https://api.contentful.com/spaces/in1ws0j2cnhw/content_types', { headers: { 'Authorization': 'Bearer ef7b0d42ac9b1ca71be8137f1c406c6c489d2678ff16135ddea89f75561d3cc1' } })
-                    .then(function(data) {
+                injector.invoke(['$http', '$window', function($http, $window) {
+                    var config = {
+                        headers: {
+                            'Authorization': 'Bearer ef7b0d42ac9b1ca71be8137f1c406c6c489d2678ff16135ddea89f75561d3cc1'
+                        }
+                    };
+
+                    $http.get('https://api.contentful.com/spaces/in1ws0j2cnhw/content_types', config).then(function(data) {
                         $window.contentfulCustomCmsAppData = {
                             contentTypes: data.data.items
                         };
 
                         angular.bootstrap(document.body, ['contentfulCustomCmsApp']);
                     });
-            }]);
-        })();
-    </script>
-</body>
+                }]);
+            })();
+        </script>
+    </body>
 </html>

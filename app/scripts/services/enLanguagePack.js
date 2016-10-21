@@ -10,6 +10,7 @@
 angular.module('contentfulCustomCmsApp')
     .constant('ENLanguagePack', (function() {
         var translations = {
+            HOME: 'Home',
             HELLO: 'Hello',
             BUYING_SECTION_HEADER: 'Buying',
             SELLING_SECTION_HEADER: 'Selling',
@@ -35,7 +36,7 @@ angular.module('contentfulCustomCmsApp')
             ITEMS: 'Items',
             SHOPPING_CARTS: 'Shopping carts',
             DELETE_ITEM: 'Delete item',
-            DELETE_CONFIRMATION: 'Are you sure you want to delete this item?',
+            SURE_TO_DELETE: 'Are you sure you want to delete this item?',
             CANCEL: 'Cancel',
             DELETE: 'Delete',
             ITEM_DETAIL: 'Item detail',
@@ -265,6 +266,7 @@ angular.module('contentfulCustomCmsApp')
             // 404 page
             PAGE_NOT_FOUND: 'Page not found',
             BACK_TO_MAIN_PAGE: 'Go back to main page',
+            PAGE_NOT_EXIST: 'The page doesn\'t exist or you don\'t have access permission to view it',
 
             // Password reset
             FORGOT_YOUR_PASSWORD: 'Forgot your password?',
