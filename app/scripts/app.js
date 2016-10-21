@@ -140,10 +140,18 @@ angular
         if (locale === 'de-de') {
             $rootScope.locale = 'de-de';
             $rootScope.T = DELanguagePack;
+
+            $rootScope.TC = function(value) {
+                return _.last(value.split('|'));
+            };
         } else {
             $cookies.put('locale', 'en-gb');
             $rootScope.locale = 'en-gb';
             $rootScope.T = ENLanguagePack;
+
+            $rootScope.TC = function(value) {
+                return _.first(value.split('|'));
+            };
         }
     }]);
 

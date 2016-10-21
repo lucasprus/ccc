@@ -20,7 +20,9 @@ angular.module('contentfulCustomCmsApp')
         var endpoint = 'entries';
 
         var T = $scope.$root.T;
-        var labelSingle = contentType.name + ' single';
+        var contentTypeName = $scope.$root.TC(contentType.name);
+
+        var labelSingle = contentTypeName + ' single';
         $scope.labelSingle = labelSingle;
 
         var formControls = contentType.fields;

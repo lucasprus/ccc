@@ -5,15 +5,15 @@
         <div class="row">
             <div class="col-md-8">
                 <form name="form" ng-submit="form.$valid ? submit() : setControlsToDirty(form)" class="form-horizontal" novalidate>
-                    <div class="form-group" ng-repeat="control in formControls" ng-class="{'has-error': !form[control.name].$pristine && form[control.name].$invalid}">
-                        <label for="{{:: control.name }}" class="col-sm-4 control-label">{{:: control.name }}</label>
+                    <div class="form-group" ng-repeat="control in formControls" ng-class="{'has-error': !form[control.id].$pristine && form[control.id].$invalid}">
+                        <label for="{{:: control.id }}" class="col-sm-4 control-label">{{:: TC(control.name) }}</label>
 
                         <div class="col-sm-8">
                             <input ng-if="control.type === 'Symbol'"
                                 class="form-control"
                                 type="text"
-                                name="{{:: control.name }}"
-                                id="{{:: control.name }}"
+                                name="{{:: control.id }}"
+                                id="{{:: control.id }}"
                                 ng-model="item[control.id]"
                                 ng-pattern="control.validation.regexp.pattern"
                                 ng-required="control.required">
@@ -21,8 +21,8 @@
                             <input ng-if="control.type === 'Date'"
                                 class="form-control"
                                 type="date"
-                                name="{{:: control.name }}"
-                                id="{{:: control.name }}"
+                                name="{{:: control.id }}"
+                                id="{{:: control.id }}"
                                 ng-model="item[control.id]"
                                 ng-required="control.required"
                                 date-to-int>
@@ -30,8 +30,8 @@
                             <div ng-if="control.type === 'Boolean'" class="checkbox">
                                 <label>
                                     <input type="checkbox"
-                                        name="{{:: control.name }}"
-                                        id="{{:: control.name }}"
+                                        name="{{:: control.id }}"
+                                        id="{{:: control.id }}"
                                         ng-model="item[control.id]"
                                         ng-true-value="true" ng-false-value="false">
                                 </label>

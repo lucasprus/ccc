@@ -8,7 +8,7 @@
  * Controller of the contentfulCustomCmsApp
  */
 angular.module('contentfulCustomCmsApp')
-    .controller('ItemsListCtrl', ['$scope', 'CONFIG', '$stateParams', '$http', '$uibModal', '$state', '$timeout', function($scope, CONFIG, $stateParams, $http, $uibModal, $state, $timeout) {
+    .controller('ItemsListCtrl', ['$scope', 'CONFIG', '$stateParams', '$http', '$uibModal', '$state', function($scope, CONFIG, $stateParams, $http, $uibModal, $state) {
         var contentType = $stateParams.contentType;
 
         var contentTypeId = contentType.sys.id;
@@ -21,8 +21,10 @@ angular.module('contentfulCustomCmsApp')
         $scope.paginationResultsPerPage = paginationResultsPerPage;
 
         var T = $scope.$root.T;
-        var labelSingle = contentType.name + ' single';
-        var labelPlural = contentType.name + ' plural';
+        var contentTypeName = $scope.$root.TC(contentType.name);
+
+        var labelSingle = contentTypeName + ' single';
+        var labelPlural = contentTypeName + ' plural';
         $scope.labelSingle = labelSingle;
         $scope.labelPlural = labelPlural;
 
