@@ -36,6 +36,33 @@
                                         ng-true-value="true" ng-false-value="false">
                                 </label>
                             </div>
+
+                            <textarea ng-if="control.type === 'Text'"
+                                class="form-control"
+                                rows="5"
+                                name="{{:: control.id }}"
+                                id="{{:: control.id }}"
+                                ng-model="item[control.id]"
+                                ng-required="control.required">
+                            </textarea>
+
+
+                            <input ng-if="control.type === 'Array'"
+                                class="form-control"
+                                type="text"
+                                name="{{:: control.id }}"
+                                id="{{:: control.id }}"
+                                ng-model="item[control.id]"
+                                ng-list
+                                ng-required="control.required">
+
+                            <input ng-if="control.type === 'Number' || control.type === 'Integer'"
+                                class="form-control"
+                                type="number"
+                                name="{{:: control.id }}"
+                                id="{{:: control.id }}"
+                                ng-model="item[control.id]"
+                                ng-required="control.required">
                         </div>
                     </div>
 

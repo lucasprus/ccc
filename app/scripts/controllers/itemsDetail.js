@@ -28,4 +28,10 @@ angular.module('contentfulCustomCmsApp')
         $http.get(itemEndpoint, config).then(function(data) {
             $scope.item = data.data;
         });
+
+        $scope.join = function(value) {
+            if (_.isArray(value)) {
+                return value.join(', ');
+            }
+        };
     }]);
