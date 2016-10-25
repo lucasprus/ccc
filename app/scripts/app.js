@@ -15,13 +15,16 @@ angular
         'ngSanitize',
         'ngTouch',
         'ui.router',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'ngFileUpload'
     ])
     .constant('CONFIG', {
         // Content management API URL
         cmApiUrl: 'https://api.contentful.com/spaces/in1ws0j2cnhw/',
         // Content delivery API URL
         cdApiUrl: 'https://cdn.contentful.com/spaces/in1ws0j2cnhw/',
+        // File upload URL
+        uploadUrl: 'https://meck-schweizer-dev.appspot.com/',
         paginationResultsPerPage: 5,
         paginationLinksOffset: 3
     })

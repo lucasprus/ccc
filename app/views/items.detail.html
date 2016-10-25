@@ -8,15 +8,25 @@
                     <div class="form-group" ng-repeat="control in formControls">
                         <label class="col-sm-4 control-label">{{:: TC(control.name) }}</label>
                         <div class="col-sm-8">
-                            <p ng-if="control.type === 'Symbol' || control.type === 'Number' || control.type === 'Integer'" class="form-control-static">{{:: item.fields[control.id] }}</p>
+                            <p ng-if="::control.type === 'Symbol' || control.type === 'Number' || control.type === 'Integer'" class="form-control-static">{{:: item.fields[control.id] }}</p>
 
-                            <p ng-if="control.type === 'Date'" class="form-control-static">{{:: item.fields[control.id] | date }}</p>
+                            <p ng-if="::control.type === 'Date'" class="form-control-static">{{:: item.fields[control.id] | date }}</p>
 
-                            <p ng-if="control.type === 'Boolean'" class="form-control-static">{{ item.fields[control.id] ? 'true' : 'false' }}</p>
+                            <p ng-if="::control.type === 'Boolean'" class="form-control-static">{{ item.fields[control.id] ? 'true' : 'false' }}</p>
 
-                            <p ng-if="control.type === 'Text'" class="form-control-static">{{ item.fields[control.id] }}</p>
+                            <p ng-if="::control.type === 'Text'" class="form-control-static">{{:: item.fields[control.id] }}</p>
 
-                            <p ng-if="control.type === 'Array'" class="form-control-static">{{ join(item.fields[control.id]) }}</p>
+                            <p ng-if="::control.type === 'Array'" class="form-control-static">{{ join(item.fields[control.id]) }}</p>
+
+                            <p ng-if="::item.fields[control.id].__contentType.indexOf('image') === 0" class="form-control-static">
+                                <img ngf-thumbnail="::item.fields[control.id].__url" width="200">
+                            </p>
+
+                            <p ng-if="::item.fields[control.id].__contentType === 'application/pdf'" class="form-control-static">
+                                <a class="btn btn-default" role="button" download ng-href="{{ item.fields[control.id].__url }}">
+                                    {{:: T.DOWNLOAD }}
+                                </a>
+                            </p>
                         </div>
                     </div>
 

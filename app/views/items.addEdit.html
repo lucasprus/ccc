@@ -63,6 +63,34 @@
                                 id="{{:: control.id }}"
                                 ng-model="item[control.id]"
                                 ng-required="control.required">
+
+                            <div ng-if="control.type === 'Link' && control.linkType === 'Asset'">
+                                <input class="form-control"
+                                    type="file"
+                                    name="fileFile"
+                                    id="{{:: control.id }}"
+                                    ng-model="item.fileFile"
+                                    ngf-select="item[control.id] = $file"
+                                    ngf-pattern="'image/*,application/pdf'"
+                                    ngf-resize="{width: 200, height: 200}">
+
+                                <input class="ng-hide"
+                                    name="{{:: control.id }}"
+                                    ng-model="item[control.id]"
+                                    ng-required="control.required">
+
+                                <div ng-if="item[control.id].__contentType.indexOf('image') === 0 || item[control.id].type.indexOf('image') === 0">
+                                    <img ngf-thumbnail="item[control.id].__url || item[control.id]" width="200">
+                                    <a href="" ng-click="item[control.id] = null; item.fileFile = null">{{:: T.REMOVE }}</a>
+                                </div>
+
+                                <div ng-if="item[control.id].__contentType === 'application/pdf' || item[control.id].type === 'application/pdf'">
+                                    <a ng-if="item[control.id].__contentType === 'application/pdf'" class="btn btn-default" role="button" download ng-href="{{ item[control.id].__url }}">
+                                        {{:: T.DOWNLOAD }}
+                                    </a>
+                                    <a href="" ng-click="item[control.id] = null; item.fileFile = null">{{:: T.REMOVE }}</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

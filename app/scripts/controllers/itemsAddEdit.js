@@ -8,7 +8,7 @@
  * Controller of the contentfulCustomCmsApp
  */
 angular.module('contentfulCustomCmsApp')
-    .controller('ItemsAddEditCtrl', ['$scope', '$http', '$stateParams', '$state', 'Utilities', 'CONFIG', '$uibModal', '$q', function($scope, $http, $stateParams, $state, Utilities, CONFIG, $uibModal, $q) {
+    .controller('ItemsAddEditCtrl', ['$scope', '$http', '$stateParams', '$state', 'Utilities', 'CONFIG', '$uibModal', '$q', 'Upload', '$timeout', function($scope, $http, $stateParams, $state, Utilities, CONFIG, $uibModal, $q, Upload, $timeout) {
         var contentType = $stateParams.contentType;
 
         var mode = $stateParams.mode;
@@ -28,37 +28,75 @@ angular.module('contentfulCustomCmsApp')
         var formControls = contentType.fields;
 
         var dataToPost = function() {
-            var fields = {};
+            var result = {};
 
             formControls.forEach(function(control) {
                 var id = control.id;
 
-                fields[id] = {
-                    'en': $scope.item[id]
-                };
+                result[id] = $scope.item[id];
 
-                /*if (control.type === 'file' && angular.isObject(result[name])) {
-                    result[name] = Upload.upload({
-                        url: CONFIG.cmApiUrl + 'upload',
-                        data: {file: result[name]}
-                    }).then(function(data) {
-                        return data.data.url;
-                    });
+                if (control.type === 'Link' && control.linkType === 'Asset' && result[id]) {
+                    if (result[id].constructor.name === "Blob" || result[id].constructor.name === "File") {
+                        var name = result[id].name;
+                        var type = result[id].type;
+
+                        result[id] = Upload.upload({
+                            url: CONFIG.uploadUrl + 'upload',
+                            data: {file: result[id]}
+                        }).then(function(data) {
+                            var dataToPost = {
+                                fields: {
+                                    title: {
+                                        en: name
+                                    },
+                                    file: {
+                                        en: {
+                                            contentType: type,
+                                            fileName: name,
+                                            upload: data.data.url
+                                        }
+                                    }
+                                }
+                            };
+
+                            return $http.post(CONFIG.cmApiUrl + 'assets', dataToPost, {headers: {'Content-Type': 'application/vnd.contentful.management.v1+json'}}).then(function(data) {
+                                var config = {
+                                    headers: {
+                                        'X-Contentful-Version': data.data.sys.version
+                                    }
+                                };
+
+                                var id = data.data.sys.id;
+
+                                return $http.put(CONFIG.cmApiUrl + 'assets/' + id + '/files/en/process', null, config).then(function(data) {
+                                    var config = {
+                                        headers: {
+                                            'X-Contentful-Version': 2
+                                        }
+                                    };
+
+                                    return $timeout(function() {
+                                        return $http.put(CONFIG.cmApiUrl + 'assets/' + id + '/published', null, config).then(function(data) {
+                                            return {
+                                                sys: {
+                                                    type: 'Link',
+                                                    linkType: 'Asset',
+                                                    id: data.data.sys.id
+                                                }
+                                            };
+                                        });
+                                    }, 3000);
+                                });
+                            });
+                        });
+                    } else {
+                        delete result[id].__url;
+                        delete result[id].__contentType;
+                    }
                 }
-
-                if (control.type === 'image' && result[name] && result[name].indexOf('data:') === 0) {
-                    result[name] = Upload.upload({
-                        url: CONFIG.cmApiUrl + 'upload',
-                        data: {file: Upload.dataUrltoBlob(result[name], $scope.item.imageFile.name)}
-                    }).then(function(data) {
-                        return data.data.url;
-                    });
-                }*/
             });
 
-            return {
-                fields: fields
-            };
+            return result;
         };
 
         if (mode === 'add') {
@@ -75,8 +113,14 @@ angular.module('contentfulCustomCmsApp')
                     }
                 };
 
-                $q.all(dataToPost()).then(function(dataToPost) {
-                    return $http.post(CONFIG.cmApiUrl + 'entries', dataToPost, config).then(function(data) {
+                $q.all(dataToPost()).then(function(data) {
+                    var dataToPost = _.mapValues(data, function(value) {
+                        return {
+                            en: value
+                        };
+                    });
+
+                    return $http.post(CONFIG.cmApiUrl + 'entries', {fields: dataToPost}, config).then(function(data) {
                         var sys = data.data.sys;
 
                         var config = {
@@ -109,18 +153,27 @@ angular.module('contentfulCustomCmsApp')
             };
 
             $http.get(itemEndpoint, config).then(function(data) {
-                var item = data.data;
+                var itemFields = data.data.fields;
 
-                /*formControls.forEach(function(control) {
-                    var name = control.name;
+                var promises = [];
+                var promise;
 
-                    if (control.embed && item[control.embed]) {
-                        item[name] = item[control.embed].id;
+                formControls.forEach(function(control) {
+                    if (control.type === 'Link' && control.linkType === 'Asset' && itemFields[control.id] && itemFields[control.id].sys) {
+                        promise = $http.get(CONFIG.cdApiUrl + 'assets/' +  itemFields[control.id].sys.id).then(function(data) {
+                            itemFields[control.id].__url = data.data.fields.file.url;
+                            itemFields[control.id].__contentType = data.data.fields.file.contentType;
+                        });
+
+                        promises.push(promise);
                     }
-                });*/
+                });
 
-                $scope.item = item.fields;
+                $q.all(promises).then(function() {
+                    $scope.item = itemFields;
+                });
             });
+
 
             $http.get(CONFIG.cmApiUrl + endpoint + '/' + id + '?sys.type[ne]=' + (new Date()).valueOf(), config).then(function(data) {
                 sys = data.data.sys;
@@ -139,8 +192,14 @@ angular.module('contentfulCustomCmsApp')
                     }
                 };
 
-                $q.all(dataToPost()).then(function(dataToPost) {
-                    return $http.put(CONFIG.cmApiUrl + endpoint + '/' + id, dataToPost, config).then(function(data) {
+                $q.all(dataToPost()).then(function(data) {
+                    var dataToPost = _.mapValues(data, function(value) {
+                        return {
+                            en: value
+                        };
+                    });
+
+                    return $http.put(CONFIG.cmApiUrl + endpoint + '/' + id, {fields: dataToPost}, config).then(function(data) {
                         sys = data.data.sys;
 
                         var config = {
@@ -174,5 +233,7 @@ angular.module('contentfulCustomCmsApp')
                 });
             }
         });*/
+
         $scope.formControls = formControls;
+        $scope.isPdf = Utilities.strings.isPdf;
     }]);
