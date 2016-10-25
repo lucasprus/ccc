@@ -46,6 +46,16 @@
                                 ng-required="control.required">
                             </textarea>
 
+                            <textarea ng-if="control.type === 'Object'"
+                                class="form-control"
+                                rows="5"
+                                name="{{:: control.id }}"
+                                id="{{:: control.id }}"
+                                ng-model="item[control.id]"
+                                ng-model-options="{updateOn: 'blur'}"
+                                ng-required="control.required"
+                                json>
+                            </textarea>
 
                             <input ng-if="control.type === 'Array'"
                                 class="form-control"

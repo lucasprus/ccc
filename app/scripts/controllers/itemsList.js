@@ -143,7 +143,8 @@ angular.module('contentfulCustomCmsApp')
 
         $scope.filters = {
             'Date': 'date',
-            'Link': 'link'
+            'Link': 'link',
+            'Object': 'json'
         };
 
         $scope.$filter = $filter;
