@@ -8,7 +8,7 @@
  * Controller of the contentfulCustomCmsApp
  */
 angular.module('contentfulCustomCmsApp')
-    .controller('ItemsListCtrl', ['$scope', 'CONFIG', '$stateParams', '$http', '$uibModal', '$state', function($scope, CONFIG, $stateParams, $http, $uibModal, $state) {
+    .controller('ItemsListCtrl', ['$scope', 'CONFIG', '$stateParams', '$http', '$uibModal', '$state', '$q', '$filter', function($scope, CONFIG, $stateParams, $http, $uibModal, $state, $q, $filter) {
         var contentType = $stateParams.contentType;
 
         var contentTypeId = contentType.sys.id;
@@ -28,7 +28,7 @@ angular.module('contentfulCustomCmsApp')
         $scope.labelSingle = labelSingle;
         $scope.labelPlural = labelPlural;
 
-        $scope.listDisplayProperties = contentType.fields;
+        var listDisplayProperties = contentType.fields;
 
         var paginationRange = function(currentPage, offset, pagesTotal) {
             var start;
@@ -63,7 +63,30 @@ angular.module('contentfulCustomCmsApp')
 
             $scope.paginationRange = paginationRange(page, CONFIG.paginationLinksOffset, pagesTotal);
 
-            $scope.items = data.data.items;
+            var promises = [];
+            var promise;
+
+            data.data.items.forEach(function(item) {
+                listDisplayProperties.forEach(function(control) {
+                    var field = item.fields[control.id];
+
+                    if (control.type === 'Link' && control.linkType === 'Asset' && field) {
+                        promise = $http.get(CONFIG.cdApiUrl + 'assets/' +  field.sys.id).then(function(data) {
+                            var file = data.data.fields.file;
+
+                            field.__url = file.url;
+                            field.__contentType = file.contentType;
+                        });
+
+                        promises.push(promise);
+                    }
+                });
+            });
+
+            $q.all(promises).then(function() {
+                $scope.listDisplayProperties = listDisplayProperties;
+                $scope.items = data.data.items;
+            });
         });
 
         var deleteItem = function(sys) {
@@ -117,4 +140,11 @@ angular.module('contentfulCustomCmsApp')
 
             $scope.$root.modal = modalInstance;
         };
+
+        $scope.filters = {
+            'Date': 'date',
+            'Link': 'link'
+        };
+
+        $scope.$filter = $filter;
     }]);
