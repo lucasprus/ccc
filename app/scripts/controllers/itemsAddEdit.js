@@ -94,6 +94,16 @@ angular.module('contentfulCustomCmsApp')
                         delete result[id].__contentType;
                     }
                 }
+
+                if (control.type === 'Link' && control.linkType === 'Entry' && result[id]) {
+                    result[id] = {
+                        sys: {
+                            type: 'Link',
+                            linkType: 'Entry',
+                            id: result[id]
+                        }
+                    };
+                }
             });
 
             return result;
@@ -167,6 +177,10 @@ angular.module('contentfulCustomCmsApp')
 
                         promises.push(promise);
                     }
+
+                    if (control.type === 'Link' && control.linkType === 'Entry' && itemFields[control.id] && itemFields[control.id].sys) {
+                        itemFields[control.id] = itemFields[control.id].sys.id;
+                    }
                 });
 
                 $q.all(promises).then(function() {
@@ -226,13 +240,13 @@ angular.module('contentfulCustomCmsApp')
 
         $scope.item = {};
 
-        /*formControls.forEach(function(control) {
-            if (control.endpoint) {
-                $http.get(CONFIG.cmApiUrl + control.endpoint).then(function(data) {
-                    control.options = control.optionsFilter ? Filters[control.optionsFilter](data.data) : data.data;
+        formControls.forEach(function(control) {
+            if (control.type === 'Link' && control.linkType === 'Entry') {
+                $http.get(CONFIG.cdApiUrl + 'entries?sys.type[ne]=' + (new Date()).valueOf()).then(function(data) {
+                    control.options = data.data.items;
                 });
             }
-        });*/
+        });
 
         $scope.formControls = formControls;
         $scope.isPdf = Utilities.strings.isPdf;

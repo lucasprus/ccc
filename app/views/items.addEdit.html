@@ -101,6 +101,16 @@
                                     <a href="" ng-click="item[control.id] = null; item.fileFile = null">{{:: T.REMOVE }}</a>
                                 </div>
                             </div>
+
+                            <select ng-if="control.type === 'Link' && control.linkType === 'Entry'"
+                                class="form-control"
+                                name="{{:: control.id }}"
+                                id="{{:: control.id }}"
+                                ng-model="item[control.id]"
+                                ng-required="control.required"
+                                ng-options="option.sys.id as option.sys.id for option in control.options">
+                                    <option value="">{{:: T.SELECT_VALUE }}</option>
+                            </select>
                         </div>
                     </div>
 
