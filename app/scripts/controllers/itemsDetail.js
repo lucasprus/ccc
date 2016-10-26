@@ -26,31 +26,52 @@ angular.module('contentfulCustomCmsApp')
         };
 
         $http.get(itemEndpoint, config).then(function(data) {
-            var item = data.data;
-
             var promises = [];
-            var promise;
 
             formControls.forEach(function(control) {
-                if (control.type === 'Link' && control.linkType === 'Asset' && item.fields[control.id]) {
-                    promise = $http.get(CONFIG.cdApiUrl + 'assets/' +  item.fields[control.id].sys.id).then(function(data) {
-                        item.fields[control.id].__url = data.data.fields.file.url;
-                        item.fields[control.id].__contentType = data.data.fields.file.contentType;
-                    });
+                var item = data.data.fields[control.id];
 
-                    promises.push(promise);
+                if (item) {
+                    if (control.type === 'Link') {
+                        if (control.linkType === 'Asset') {
+                            promises.push($http.get(CONFIG.cdApiUrl + 'assets/' +  item.sys.id).then(function(data) {
+                                item.__url = data.data.fields.file.url;
+                                item.__contentType = data.data.fields.file.contentType;
+                            }));
+                        } else if (control.linkType === 'Entry') {
+                            promises.push($http.get(CONFIG.cdApiUrl + 'entries/' +  item.sys.id).then(function(data) {
+                                item.__entry = data.data;
+                            }));
+                        }
+                    } else if (control.type === 'Array') {
+                        if (control.items.type === 'Link') {
+                            if (control.items.linkType === 'Entry') {
+                                item.forEach(function(i) {
+                                    promises.push($http.get(CONFIG.cdApiUrl + 'entries/' +  i.sys.id).then(function(data) {
+                                        i.__entry = data.data;
+                                    }));
+                                });
+                            }
+                        }
+                    }
                 }
             });
 
             $q.all(promises).then(function() {
                 $scope.formControls = formControls;
-                $scope.item = item;
+                $scope.item = data.data;
             });
         });
 
         $scope.join = function(value) {
             if (_.isArray(value)) {
                 return value.join(', ');
+            }
+        };
+
+        $scope.linkEntry = function(item) {
+            if (item && item.__entry) {
+                return item.__entry.sys.contentType.sys.id + ' :: ' + item.__entry.sys.id;
             }
         };
     }]);

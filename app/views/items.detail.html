@@ -14,7 +14,7 @@
 
                             <p ng-if="::control.type === 'Boolean'" class="form-control-static">{{ item.fields[control.id] ? 'true' : 'false' }}</p>
 
-                            <p ng-if="::control.type === 'Array'" class="form-control-static">{{ join(item.fields[control.id]) }}</p>
+                            <p ng-if="::control.type === 'Array' && control.items.type === 'Symbol'" class="form-control-static">{{ join(item.fields[control.id]) }}</p>
 
                             <p ng-if="::item.fields[control.id].__contentType.indexOf('image') === 0" class="form-control-static">
                                 <img ngf-thumbnail="::item.fields[control.id].__url" width="200">
@@ -27,6 +27,14 @@
                                     {{:: T.DOWNLOAD }}
                                 </a>
                             </p>
+
+                            <p ng-if="::control.type === 'Link' && control.linkType === 'Entry'" class="form-control-static">{{:: linkEntry(item.fields[control.id]) }}</p>
+
+                            <ul ng-if="::control.type === 'Array' && control.items.type === 'Link' && control.items.linkType === 'Entry'" class="form-control-static list-unstyled">
+                                <li ng-repeat="i in item.fields[control.id]">
+                                    {{:: linkEntry(i) }}
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
