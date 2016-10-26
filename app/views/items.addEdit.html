@@ -57,7 +57,7 @@
                                 json>
                             </textarea>
 
-                            <input ng-if="control.type === 'Array'"
+                            <input ng-if="control.type === 'Array' && control.items.type === 'Symbol'"
                                 class="form-control"
                                 type="text"
                                 name="{{:: control.id }}"
@@ -110,6 +110,16 @@
                                 ng-required="control.required"
                                 ng-options="option.sys.id as option.sys.id for option in control.options">
                                     <option value="">{{:: T.SELECT_VALUE }}</option>
+                            </select>
+
+                            <select ng-if="control.type === 'Array' && control.items.type === 'Link' && control.items.linkType === 'Entry'"
+                                class="form-control"
+                                name="{{:: control.id }}"
+                                id="{{:: control.id }}"
+                                ng-model="item[control.id]"
+                                ng-required="control.required"
+                                ng-options="option.sys.id as option.sys.id for option in control.options"
+                                multiple>
                             </select>
                         </div>
                     </div>

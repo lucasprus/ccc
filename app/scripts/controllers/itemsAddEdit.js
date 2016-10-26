@@ -104,6 +104,18 @@ angular.module('contentfulCustomCmsApp')
                         }
                     };
                 }
+
+                if (control.type === 'Array' && control.items.type === 'Link' && control.items.linkType === 'Entry' && result[id]) {
+                    result[id] = _.map(result[id], function(value) {
+                        return {
+                            sys: {
+                                type: 'Link',
+                                linkType: 'Entry',
+                                id: value
+                            }
+                        };
+                    });
+                }
             });
 
             return result;
@@ -181,6 +193,10 @@ angular.module('contentfulCustomCmsApp')
                     if (control.type === 'Link' && control.linkType === 'Entry' && itemFields[control.id] && itemFields[control.id].sys) {
                         itemFields[control.id] = itemFields[control.id].sys.id;
                     }
+
+                    if (control.type === 'Array' && control.items.type === 'Link' && control.items.linkType === 'Entry' && itemFields[control.id]) {
+                        itemFields[control.id] = _.pluck(itemFields[control.id], 'sys.id');
+                    }
                 });
 
                 $q.all(promises).then(function() {
@@ -241,7 +257,7 @@ angular.module('contentfulCustomCmsApp')
         $scope.item = {};
 
         formControls.forEach(function(control) {
-            if (control.type === 'Link' && control.linkType === 'Entry') {
+            if (control.type === 'Link' && control.linkType === 'Entry' || control.type === 'Array' && control.items.type === 'Link' && control.items.linkType === 'Entry') {
                 $http.get(CONFIG.cdApiUrl + 'entries?sys.type[ne]=' + (new Date()).valueOf()).then(function(data) {
                     control.options = data.data.items;
                 });
