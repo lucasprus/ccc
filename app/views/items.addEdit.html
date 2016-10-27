@@ -77,7 +77,7 @@
                                 json>
                             </textarea>
 
-                            <input ng-if="control.type === 'Array' && control.items.type === 'Symbol'"
+                            <input ng-if="control.type === 'Array' && control.items.type === 'Symbol' && !control.options"
                                 class="form-control"
                                 type="text"
                                 name="{{:: control.id }}"
@@ -85,6 +85,26 @@
                                 ng-model="item[control.id]"
                                 ng-list
                                 ng-required="control.required">
+
+                            <select ng-if="control.type === 'Array' && control.items.type === 'Symbol' && control.options && control.options.length > 5"
+                                class="form-control"
+                                name="{{:: control.id }}"
+                                id="{{:: control.id }}"
+                                ng-model="item[control.id]"
+                                ng-required="control.required"
+                                ng-options="option for option in control.options"
+                                multiple>
+                            </select>
+
+                            <label ng-if="control.type === 'Array' && control.items.type === 'Symbol' && control.options && control.options.length < 6"
+                                ng-repeat="option in control.options"
+                                class="checkbox-inline">
+                                <input type="checkbox"
+                                    name="{{:: control.id }}"
+                                    ng-model="item[control.id][option]"
+                                    value="{{:: option }}"
+                                    ng-required="control.required && existenceObjectToArray(item[control.id]).length === 0"> {{:: option }}
+                            </label>
 
                             <input ng-if="control.type === 'Number' || control.type === 'Integer'"
                                 class="form-control"

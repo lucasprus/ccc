@@ -116,6 +116,10 @@ angular.module('contentfulCustomCmsApp')
                         };
                     });
                 }
+
+                if (control.type === 'Array' && control.items.type === 'Symbol' && control.options && control.options.length < 6) {
+                    result[id] = $scope.existenceObjectToArray(result[id]);
+                }
             });
 
             return result;
@@ -197,6 +201,10 @@ angular.module('contentfulCustomCmsApp')
                     if (control.type === 'Array' && control.items.type === 'Link' && control.items.linkType === 'Entry' && itemFields[control.id]) {
                         itemFields[control.id] = _.pluck(itemFields[control.id], 'sys.id');
                     }
+
+                    if (control.type === 'Array' && control.items.type === 'Symbol' && control.options && control.options.length < 6) {
+                        itemFields[control.id] = $scope.arrayToExistenceObject(itemFields[control.id]);
+                    }
                 });
 
                 $q.all(promises).then(function() {
@@ -265,10 +273,36 @@ angular.module('contentfulCustomCmsApp')
 
             var iN = _.find(control.validations, 'in');
 
-            if (control.type === 'Symbol' && iN) {
+            if (control.type === 'Array') {
+                iN = _.find(control.items.validations, 'in');
+            }
+
+            if (iN) {
                 control.options = iN.in;
             }
         });
+
+        $scope.arrayToExistenceObject = function(array) {
+            var obj = {};
+
+            _.forEach(array, function(value) {
+                obj[value] = true;
+            });
+
+            return obj;
+        };
+
+        $scope.existenceObjectToArray = function(obj) {
+            var array = [];
+
+            _.forEach(obj, function(value, key) {
+                if (value === true && array.indexOf(key) === -1) {
+                    array.push(key);
+                }
+            });
+
+            return array;
+        };
 
         $scope.formControls = formControls;
         $scope.isPdf = Utilities.strings.isPdf;
