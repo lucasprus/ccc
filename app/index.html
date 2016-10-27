@@ -110,7 +110,7 @@
                         }
                     };
 
-                    $http.get('https://api.contentful.com/spaces/in1ws0j2cnhw/content_types', config).then(function(data) {
+                    $http.get('https://api.contentful.com/spaces/in1ws0j2cnhw/content_types?order=name', config).then(function(data) {
                         $window.contentfulCustomCmsAppData = {
                             contentTypes: data.data.items
                         };

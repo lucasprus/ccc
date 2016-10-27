@@ -145,7 +145,7 @@ angular
             $rootScope.T = DELanguagePack;
 
             $rootScope.TC = function(value) {
-                return _.last(value.split('|'));
+                return _.first(value.split('|'));
             };
         } else {
             $cookies.put('locale', 'en-gb');
@@ -153,7 +153,7 @@ angular
             $rootScope.T = ENLanguagePack;
 
             $rootScope.TC = function(value) {
-                return _.first(value.split('|'));
+                return _.last(value.split('|'));
             };
         }
     }]);

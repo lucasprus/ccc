@@ -12,7 +12,7 @@ angular.module('contentfulCustomCmsApp')
         var contentType = $stateParams.contentType;
 
         var contentTypeId = contentType.sys.id;
-        var endpoint = 'entries?content_type=' + contentTypeId + '&sys.type[ne]=' + (new Date()).valueOf();
+        var endpoint = 'entries?content_type=' + contentTypeId + '&order=fields.' + contentType.displayField + '&sys.type[ne]=' + (new Date()).valueOf();
 
         var page = $stateParams.page || 1;
         $scope.page = page;
