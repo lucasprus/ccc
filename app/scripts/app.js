@@ -16,7 +16,8 @@ angular
         'ngTouch',
         'ui.router',
         'ui.bootstrap',
-        'ngFileUpload'
+        'ngFileUpload',
+        'textAngular'
     ])
     .constant('CONFIG', {
         // Content management API URL
