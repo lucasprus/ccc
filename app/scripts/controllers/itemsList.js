@@ -141,11 +141,38 @@ angular.module('contentfulCustomCmsApp')
             $scope.$root.modal = modalInstance;
         };
 
-        $scope.filters = {
-            'Date': 'date',
-            'Link': 'link',
-            'Object': 'json'
-        };
+        $scope.filter = function(displayProperty) {
+            var filters = {
+                'Date': $filter('date'),
+                'Link': $filter('link'),
+                'Object': $filter('json'),
+                'Text': _.partial($filter('limitTo'),_ , 10)
+            };
 
-        $scope.$filter = $filter;
+            if (filters[displayProperty.type]) {
+                return filters[displayProperty.type];
+            }
+
+            if (displayProperty.type === 'Array') {
+                if (filters[displayProperty.items.type]) {
+                    return function(array) {
+                        if (!array) {
+                            return;
+                        }
+
+                        return _.map(array, filters[displayProperty.items.type]).join(', ');
+                    };
+                }
+
+                return function(array) {
+                    if (!array) {
+                        return;
+                    }
+
+                    return array.join(', ');
+                };
+            }
+
+            return angular.identity;
+        };
     }]);
