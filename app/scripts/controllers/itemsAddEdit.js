@@ -262,6 +262,12 @@ angular.module('contentfulCustomCmsApp')
                     control.options = data.data.items;
                 });
             }
+
+            var iN = _.find(control.validations, 'in');
+
+            if (control.type === 'Symbol' && iN) {
+                control.options = iN.in;
+            }
         });
 
         $scope.formControls = formControls;

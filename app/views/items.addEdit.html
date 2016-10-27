@@ -9,7 +9,7 @@
                         <label for="{{:: control.id }}" class="col-sm-4 control-label">{{:: TC(control.name) }}</label>
 
                         <div class="col-sm-8">
-                            <input ng-if="control.type === 'Symbol'"
+                            <input ng-if="control.type === 'Symbol' && !control.options"
                                 class="form-control"
                                 type="text"
                                 name="{{:: control.id }}"
@@ -17,6 +17,26 @@
                                 ng-model="item[control.id]"
                                 ng-pattern="control.validation.regexp.pattern"
                                 ng-required="control.required">
+
+                            <select ng-if="control.type === 'Symbol' && control.options && (control.options.length > 5 || !control.required)"
+                                class="form-control"
+                                name="{{:: control.id }}"
+                                id="{{:: control.id }}"
+                                ng-model="item[control.id]"
+                                ng-required="control.required"
+                                ng-options="option for option in control.options">
+                                    <option value="">{{:: T.SELECT_VALUE }}</option>
+                            </select>
+
+                            <label ng-if="control.type === 'Symbol' && control.options && control.options.length < 6 && control.required"
+                                ng-repeat="option in control.options"
+                                class="radio-inline">
+                                <input type="radio"
+                                    name="{{:: control.id }}"
+                                    ng-model="item[control.id]"
+                                    value="{{:: option }}"
+                                    required> {{:: option }}
+                            </label>
 
                             <input ng-if="control.type === 'Date'"
                                 class="form-control"
