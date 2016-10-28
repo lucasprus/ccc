@@ -18,8 +18,9 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th ng-repeat="displayProperty in listDisplayProperties" ng-if="displayProperty.type !== 'Text'">
-                        {{ TC(displayProperty.name) }}
+                    <th ng-repeat="displayProperty in listDisplayProperties"
+                        ng-if="displayProperty.type !== 'Text' && displayProperty.type !== 'Object'">
+                            {{ TC(displayProperty.name) }}
                     </th>
                     <th></th>
                 </tr>
@@ -28,7 +29,10 @@
                 <tr ng-repeat="item in items">
                     <td>{{ paginationResultsPerPage * (page - 1) + $index + 1 }}</td>
 
-                    <td ng-repeat="displayProperty in listDisplayProperties" ng-if="displayProperty.type !== 'Text'" ng-bind-html="filter(displayProperty)(item.fields[displayProperty.id]) || item.fields[displayProperty.id]"></td>
+                    <td ng-repeat="displayProperty in listDisplayProperties"
+                        ng-if="displayProperty.type !== 'Text' && displayProperty.type !== 'Object'"
+                        ng-bind-html="filter(displayProperty)(item.fields[displayProperty.id]) || item.fields[displayProperty.id]">
+                    </td>
 
                     <td>
                         <a ui-sref="^.detail({id: item.sys.id})" role="button" class="btn btn-default" aria-label="{{:: T.DETAILS }}" title="{{:: T.DETAILS }}">
