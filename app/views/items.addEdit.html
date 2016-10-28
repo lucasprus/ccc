@@ -146,7 +146,7 @@
                                 id="{{:: control.id }}"
                                 ng-model="item[control.id]"
                                 ng-required="control.required"
-                                ng-options="option.sys.id as option.sys.id for option in control.options">
+                                ng-options="option.sys.id as contentTypes[option.sys.contentType.sys.id].name + ' :: ' + option.fields[contentTypes[option.sys.contentType.sys.id].displayField] + ' [' + option.sys.id + ']' for option in control.options">
                                     <option value="">{{:: T.SELECT_VALUE }}</option>
                             </select>
 
@@ -156,7 +156,7 @@
                                 id="{{:: control.id }}"
                                 ng-model="item[control.id]"
                                 ng-required="control.required"
-                                ng-options="option.sys.id as option.sys.id for option in control.options"
+                                ng-options="option.sys.id as contentTypes[option.sys.contentType.sys.id].name + ' :: ' + option.fields[contentTypes[option.sys.contentType.sys.id].displayField] + ' [' + option.sys.id + ']' for option in control.options"
                                 multiple>
                             </select>
                         </div>
