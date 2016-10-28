@@ -3,12 +3,14 @@
 
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <form class="form-horizontal">
                     <div class="form-group" ng-repeat="control in formControls">
-                        <label class="col-sm-4 control-label">{{:: TC(control.name) }}</label>
-                        <div class="col-sm-8">
-                            <p ng-if="::control.type === 'Symbol' || control.type === 'Number' || control.type === 'Integer' || control.type === 'Text'" class="form-control-static">{{:: item.fields[control.id] }}</p>
+                        <label class="col-sm-2 control-label">{{:: TC(control.name) }}</label>
+                        <div class="col-sm-10">
+                            <p ng-if="::control.type === 'Symbol' || control.type === 'Number' || control.type === 'Integer'" class="form-control-static">{{:: item.fields[control.id] }}</p>
+
+                            <p ng-if="::control.type === 'Text'" class="form-control-static" ng-bind-html="::item.fields[control.id]"></p>
 
                             <p ng-if="::control.type === 'Date'" class="form-control-static">{{:: item.fields[control.id] | date }}</p>
 

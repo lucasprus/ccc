@@ -3,12 +3,12 @@
 
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <form name="form" ng-submit="form.$valid ? submit() : setControlsToDirty(form)" class="form-horizontal" novalidate>
                     <div class="form-group" ng-repeat="control in formControls" ng-class="{'has-error': !form[control.id].$pristine && form[control.id].$invalid}">
-                        <label for="{{:: control.id }}" class="col-sm-4 control-label">{{:: TC(control.name) }}</label>
+                        <label for="{{:: control.id }}" class="col-sm-2 control-label">{{:: TC(control.name) }}</label>
 
-                        <div class="col-sm-8">
+                        <div class="col-sm-10">
                             <input ng-if="control.type === 'Symbol' && !control.options"
                                 class="form-control"
                                 type="text"
@@ -57,14 +57,12 @@
                                 </label>
                             </div>
 
-                            <textarea ng-if="control.type === 'Text'"
-                                class="form-control"
-                                rows="5"
+                            <text-angular ng-if="control.type === 'Text'"
                                 name="{{:: control.id }}"
                                 id="{{:: control.id }}"
                                 ng-model="item[control.id]"
                                 ng-required="control.required">
-                            </textarea>
+                            </text-angular>
 
                             <textarea ng-if="control.type === 'Object'"
                                 class="form-control"
