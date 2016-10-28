@@ -341,6 +341,9 @@ angular.module('contentfulCustomCmsApp')
             // File download
             DOWNLOAD: 'Download',
 
+            LATITUDE: 'Latitude',
+            LONGITUDE: 'Longitude',
+
             validation: {
                 required: 'Required',
                 pattern: {

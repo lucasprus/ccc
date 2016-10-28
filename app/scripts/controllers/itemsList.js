@@ -146,7 +146,8 @@ angular.module('contentfulCustomCmsApp')
                 'Date': $filter('date'),
                 'Link': $filter('link'),
                 'Object': $filter('json'),
-                'Text': _.partial($filter('limitTo'),_ , 10)
+                'Text': _.partial($filter('limitTo'),_ , 10),
+                'Location': $filter('location')
             };
 
             if (filters[displayProperty.type]) {

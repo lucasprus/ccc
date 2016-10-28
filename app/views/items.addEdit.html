@@ -64,7 +64,7 @@
                                 ng-required="control.required">
                             </text-angular>
 
-                            <textarea ng-if="control.type === 'Object'"
+                            <textarea ng-if="control.type === 'Object' || control.type === 'Location'"
                                 class="form-control"
                                 rows="5"
                                 name="{{:: control.id }}"

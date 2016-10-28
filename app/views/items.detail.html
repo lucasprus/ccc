@@ -24,6 +24,14 @@
 
                             <p ng-if="::control.type === 'Object'" class="form-control-static">{{:: item.fields[control.id] | json }}</p>
 
+                            <dl ng-if="::control.type === 'Location' && item.fields[control.id]" class="form-control-static">
+                                <dt>{{:: T.LATITUDE }}</dt>
+                                <dd>{{:: item.fields[control.id].lat }}</dd>
+
+                                <dt>{{:: T.LONGITUDE }}</dt>
+                                <dd>{{:: item.fields[control.id].lon }}</dd>
+                            </dl>
+
                             <p ng-if="::item.fields[control.id].__contentType === 'application/pdf'" class="form-control-static">
                                 <a class="btn btn-default" role="button" download ng-href="{{ item.fields[control.id].__url }}">
                                     {{:: T.DOWNLOAD }}
