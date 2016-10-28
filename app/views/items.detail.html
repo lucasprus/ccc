@@ -38,11 +38,17 @@
                                 </a>
                             </p>
 
-                            <p ng-if="::control.type === 'Link' && control.linkType === 'Entry'" class="form-control-static">{{:: linkEntry(item.fields[control.id]) }}</p>
+                            <p ng-if="::control.type === 'Link' && control.linkType === 'Entry' && item.fields[control.id].__entry" class="form-control-static">
+                                <a ng-init="entry = item.fields[control.id].__entry" ui-sref="admin.{{:: entry.sys.contentType.sys.id }}.detail({id: entry.sys.id})">
+                                    {{:: entry.fields[contentTypes[entry.sys.contentType.sys.id].displayField] || entry.sys.id }}
+                                </a>
+                            </p>
 
                             <ul ng-if="::control.type === 'Array' && control.items.type === 'Link' && control.items.linkType === 'Entry'" class="form-control-static list-unstyled">
                                 <li ng-repeat="i in item.fields[control.id]">
-                                    {{:: linkEntry(i) }}
+                                    <a ui-sref="admin.{{:: i.__entry.sys.contentType.sys.id }}.detail({id: i.__entry.sys.id})">
+                                        {{:: i.__entry.fields[contentTypes[i.__entry.sys.contentType.sys.id].displayField] || i.__entry.sys.id }}
+                                    </a>
                                 </li>
                             </ul>
                         </div>

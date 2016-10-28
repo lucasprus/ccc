@@ -84,7 +84,7 @@ angular
                 url: '/admin',
                 templateUrl: 'views/admin.html',
                 controller: ['$scope', function($scope) {
-                    $scope.contentTypes = contentfulCustomCmsAppData.contentTypes;
+                    $scope.contentTypesMenu = contentfulCustomCmsAppData.contentTypes;
                 }],
                 redirectTo: contentTypes[0] ? 'admin.' + contentTypes[0].sys.id : 'home'
             });
@@ -157,5 +157,7 @@ angular
                 return _.last(value.split('|'));
             };
         }
+    }])
+    .run(['$rootScope', '$window', function($rootScope, $window) {
+        $rootScope.contentTypes = _.indexBy($window.contentfulCustomCmsAppData.contentTypes, 'sys.id');
     }]);
-

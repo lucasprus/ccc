@@ -68,10 +68,4 @@ angular.module('contentfulCustomCmsApp')
                 return value.join(', ');
             }
         };
-
-        $scope.linkEntry = function(item) {
-            if (item && item.__entry) {
-                return item.__entry.sys.contentType.sys.id + ' :: ' + item.__entry.sys.id;
-            }
-        };
     }]);

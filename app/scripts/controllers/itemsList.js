@@ -80,6 +80,14 @@ angular.module('contentfulCustomCmsApp')
 
                         promises.push(promise);
                     }
+
+                    if (control.type === 'Link' && control.linkType === 'Entry' && field) {
+                        promise = $http.get(CONFIG.cdApiUrl + 'entries/' +  field.sys.id).then(function(data) {
+                            field.__entry = data.data;
+                        });
+
+                        promises.push(promise);
+                    }
                 });
             });
 
