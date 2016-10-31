@@ -8,7 +8,7 @@
  * Controller of the contentfulCustomCmsApp
  */
 angular.module('contentfulCustomCmsApp')
-    .controller('ItemsListCtrl', ['$scope', 'CONFIG', '$stateParams', '$http', '$uibModal', '$state', '$q', '$filter', function($scope, CONFIG, $stateParams, $http, $uibModal, $state, $q, $filter) {
+    .controller('ItemsListCtrl', ['$scope', 'CONFIG', '$stateParams', '$http', '$uibModal', '$state', '$q', function($scope, CONFIG, $stateParams, $http, $uibModal, $state, $q) {
         var contentType = $stateParams.contentType;
 
         var contentTypeId = contentType.sys.id;
@@ -70,23 +70,37 @@ angular.module('contentfulCustomCmsApp')
                 listDisplayProperties.forEach(function(control) {
                     var field = item.fields[control.id];
 
-                    if (control.type === 'Link' && control.linkType === 'Asset' && field) {
-                        promise = $http.get(CONFIG.cdApiUrl + 'assets/' +  field.sys.id).then(function(data) {
-                            var file = data.data.fields.file;
+                    if (field) {
+                        if (control.type === 'Link') {
+                            if (control.linkType === 'Asset') {
+                                promise = $http.get(CONFIG.cdApiUrl + 'assets/' +  field.sys.id).then(function(data) {
+                                    var file = data.data.fields.file;
 
-                            field.__url = file.url;
-                            field.__contentType = file.contentType;
-                        });
+                                    field.__url = file.url;
+                                    field.__contentType = file.contentType;
+                                });
 
-                        promises.push(promise);
-                    }
+                                promises.push(promise);
+                            }
 
-                    if (control.type === 'Link' && control.linkType === 'Entry' && field) {
-                        promise = $http.get(CONFIG.cdApiUrl + 'entries/' +  field.sys.id).then(function(data) {
-                            field.__entry = data.data;
-                        });
+                            if (control.linkType === 'Entry') {
+                                promise = $http.get(CONFIG.cdApiUrl + 'entries/' +  field.sys.id).then(function(data) {
+                                    field.__entry = data.data;
+                                });
 
-                        promises.push(promise);
+                                promises.push(promise);
+                            }
+                        } else if (control.type === 'Array') {
+                            if (control.items.type === 'Link') {
+                                if (control.items.linkType === 'Entry') {
+                                    field.forEach(function(i) {
+                                        promises.push($http.get(CONFIG.cdApiUrl + 'entries/' +  i.sys.id).then(function(data) {
+                                            i.__entry = data.data;
+                                        }));
+                                    });
+                                }
+                            }
+                        }
                     }
                 });
             });
@@ -149,39 +163,11 @@ angular.module('contentfulCustomCmsApp')
             $scope.$root.modal = modalInstance;
         };
 
-        $scope.filter = function(displayProperty) {
-            var filters = {
-                'Date': $filter('date'),
-                'Link': $filter('link'),
-                'Object': $filter('json'),
-                'Text': _.partial($filter('limitTo'),_ , 10),
-                'Location': $filter('location')
-            };
-
-            if (filters[displayProperty.type]) {
-                return filters[displayProperty.type];
+        $scope.join = function(value) {
+            if (_.isArray(value)) {
+                return value.join(', ');
             }
-
-            if (displayProperty.type === 'Array') {
-                if (filters[displayProperty.items.type]) {
-                    return function(array) {
-                        if (!array) {
-                            return;
-                        }
-
-                        return _.map(array, filters[displayProperty.items.type]).join(', ');
-                    };
-                }
-
-                return function(array) {
-                    if (!array) {
-                        return;
-                    }
-
-                    return array.join(', ');
-                };
-            }
-
-            return angular.identity;
         };
+
+        $scope.startsWith = _.startsWith;
     }]);

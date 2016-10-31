@@ -29,9 +29,55 @@
                 <tr ng-repeat="item in items">
                     <td>{{ paginationResultsPerPage * (page - 1) + $index + 1 }}</td>
 
-                    <td ng-repeat="displayProperty in listDisplayProperties"
+                    <!-- <td ng-repeat="displayProperty in listDisplayProperties"
                         ng-if="displayProperty.type !== 'Text' && displayProperty.type !== 'Object'"
                         ng-bind-html="filter(displayProperty)(item.fields[displayProperty.id]) || item.fields[displayProperty.id]">
+                    </td> -->
+
+                    <td ng-repeat="displayProperty in listDisplayProperties"
+                        ng-if="displayProperty.type !== 'Text' && displayProperty.type !== 'Object'"
+                        ng-switch="displayProperty.type"
+                        ng-init="i = item.fields[displayProperty.id]">
+                        <span ng-switch-when="Date">{{ i | date }}</span>
+                        <span ng-switch-when="Link">
+                            <img ng-if="i.sys.linkType === 'Asset' && startsWith(i.__contentType, 'image')"
+                                ng-src="{{ i.__url }}" width="100">
+                            <span ng-if="i.sys.linkType === 'Asset' && i.__contentType === 'application/pdf'">
+                                PDF file
+                            </span>
+                            <a ng-if="i.sys.linkType === 'Entry'"
+                                ui-sref="admin.{{ i.__entry.sys.contentType.sys.id }}.detail({id: i.__entry.sys.id})">
+                                {{ i.__entry.fields[contentTypes[i.__entry.sys.contentType.sys.id].displayField] || i.__entry.sys.id }}
+                            </a>
+                        </span>
+                        <dl ng-switch-when="Location">
+                            <dt>{{ T.LATITUDE }}</dt><dd>{{ i.lat }}</dd>
+                            <dt>{{ T.LONGITUDE }}</dt><dd>{{ i.lon }}</dd>
+                        </dl>
+                        <div ng-switch-when="Array" ng-switch="displayProperty.items.type">
+                            <div ng-switch-when="Link">
+                                <div ng-if="displayProperty.items.linkType === 'Asset'">
+                                    <span ng-repeat="ii in i">
+                                        <img ng-if="startsWith(ii.__contentType, 'image')"
+                                            ng-src="{{ ii.__url }}" width="100">
+                                        <span ng-if="ii.__contentType === 'application/pdf'">
+                                            PDF file
+                                        </span>
+                                    </span>
+                                </div>
+
+                                <ul ng-if="displayProperty.items.linkType === 'Entry'"
+                                    class="list-unstyled">
+                                    <li ng-repeat="ii in i">
+                                        <a ui-sref="admin.{{ ii.__entry.sys.contentType.sys.id }}.detail({id: ii.__entry.sys.id})">
+                                            {{ ii.__entry.fields[contentTypes[ii.__entry.sys.contentType.sys.id].displayField] || ii.__entry.sys.id }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <span ng-switch-default>{{ join(i) }}</span>
+                        </div>
+                        <span ng-switch-default ng-bind="i"></span>
                     </td>
 
                     <td>
