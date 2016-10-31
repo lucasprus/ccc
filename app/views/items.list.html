@@ -29,11 +29,6 @@
                 <tr ng-repeat="item in items">
                     <td>{{ paginationResultsPerPage * (page - 1) + $index + 1 }}</td>
 
-                    <!-- <td ng-repeat="displayProperty in listDisplayProperties"
-                        ng-if="displayProperty.type !== 'Text' && displayProperty.type !== 'Object'"
-                        ng-bind-html="filter(displayProperty)(item.fields[displayProperty.id]) || item.fields[displayProperty.id]">
-                    </td> -->
-
                     <td ng-repeat="displayProperty in listDisplayProperties"
                         ng-if="displayProperty.type !== 'Text' && displayProperty.type !== 'Object'"
                         ng-switch="displayProperty.type"
@@ -50,10 +45,12 @@
                                 {{ i.__entry.fields[contentTypes[i.__entry.sys.contentType.sys.id].displayField] || i.__entry.sys.id }}
                             </a>
                         </span>
-                        <dl ng-switch-when="Location">
-                            <dt>{{ T.LATITUDE }}</dt><dd>{{ i.lat }}</dd>
-                            <dt>{{ T.LONGITUDE }}</dt><dd>{{ i.lon }}</dd>
-                        </dl>
+                        <div ng-switch-when="Location">
+                            <dl ng-if="i">
+                                <dt>{{ T.LATITUDE }}</dt><dd>{{ i.lat }}</dd>
+                                <dt>{{ T.LONGITUDE }}</dt><dd>{{ i.lon }}</dd>
+                            </dl>
+                        </div>
                         <div ng-switch-when="Array" ng-switch="displayProperty.items.type">
                             <div ng-switch-when="Link">
                                 <div ng-if="displayProperty.items.linkType === 'Asset'">
