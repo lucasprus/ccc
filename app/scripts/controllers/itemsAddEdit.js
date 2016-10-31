@@ -36,7 +36,7 @@ angular.module('contentfulCustomCmsApp')
                 result[id] = $scope.item[id];
 
                 if (control.type === 'Link' && control.linkType === 'Asset' && result[id]) {
-                    if (result[id].constructor.name === "Blob" || result[id].constructor.name === "File") {
+                    if (result[id].constructor.name === 'Blob' || result[id].constructor.name === 'File') {
                         var name = result[id].name;
                         var type = result[id].type;
 
@@ -211,7 +211,6 @@ angular.module('contentfulCustomCmsApp')
                     $scope.item = itemFields;
                 });
             });
-
 
             $http.get(CONFIG.cmApiUrl + endpoint + '/' + id + '?sys.type[ne]=' + (new Date()).valueOf(), config).then(function(data) {
                 sys = data.data.sys;

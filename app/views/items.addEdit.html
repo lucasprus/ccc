@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-10">
                 <form name="form" ng-submit="form.$valid ? submit() : setControlsToDirty(form)" class="form-horizontal" novalidate>
-                    <div class="form-group" ng-repeat="control in formControls" ng-class="{'has-error': !form[control.id].$pristine && form[control.id].$invalid}">
+                    <div class="form-group" ng-repeat="control in formControls" ng-class="{'has-error': !form[control.id].$pristine && form[control.id].$invalid || control.type === 'Link' && control.linkType === 'Asset' && !form.fileFile.$pristine && form.fileFile.$invalid}">
                         <label for="{{:: control.id }}" class="col-sm-2 control-label">{{:: TC(control.name) }}</label>
 
                         <div class="col-sm-10">
@@ -15,15 +15,17 @@
                                 name="{{:: control.id }}"
                                 id="{{:: control.id }}"
                                 ng-model="item[control.id]"
-                                ng-pattern="control.validation.regexp.pattern"
-                                ng-required="control.required">
+                                ng-minlength="control.validations.minlength.value"
+                                ng-maxlength="control.validations.maxlength.value"
+                                ng-pattern="control.validations.pattern.value"
+                                ng-required="control.validations.required.value">
 
                             <select ng-if="control.type === 'Symbol' && control.options && (control.options.length > 5 || !control.required)"
                                 class="form-control"
                                 name="{{:: control.id }}"
                                 id="{{:: control.id }}"
                                 ng-model="item[control.id]"
-                                ng-required="control.required"
+                                ng-required="control.validations.required.value"
                                 ng-options="option for option in control.options">
                                     <option value="">{{:: T.SELECT_VALUE }}</option>
                             </select>
@@ -44,7 +46,7 @@
                                 name="{{:: control.id }}"
                                 id="{{:: control.id }}"
                                 ng-model="item[control.id]"
-                                ng-required="control.required"
+                                ng-required="control.validations.required.value"
                                 date-to-int>
 
                             <div ng-if="control.type === 'Boolean'" class="checkbox">
@@ -61,7 +63,7 @@
                                 name="{{:: control.id }}"
                                 id="{{:: control.id }}"
                                 ng-model="item[control.id]"
-                                ng-required="control.required">
+                                ng-required="control.validations.required.value">
                             </text-angular>
 
                             <textarea ng-if="control.type === 'Object' || control.type === 'Location'"
@@ -71,7 +73,7 @@
                                 id="{{:: control.id }}"
                                 ng-model="item[control.id]"
                                 ng-model-options="{updateOn: 'blur'}"
-                                ng-required="control.required"
+                                ng-required="control.validations.required.value"
                                 json>
                             </textarea>
 
@@ -82,14 +84,14 @@
                                 id="{{:: control.id }}"
                                 ng-model="item[control.id]"
                                 ng-list
-                                ng-required="control.required">
+                                ng-required="control.validations.required.value">
 
                             <select ng-if="control.type === 'Array' && control.items.type === 'Symbol' && control.options && control.options.length > 5"
                                 class="form-control"
                                 name="{{:: control.id }}"
                                 id="{{:: control.id }}"
                                 ng-model="item[control.id]"
-                                ng-required="control.required"
+                                ng-required="control.validations.required.value"
                                 ng-options="option for option in control.options"
                                 multiple>
                             </select>
@@ -110,7 +112,9 @@
                                 name="{{:: control.id }}"
                                 id="{{:: control.id }}"
                                 ng-model="item[control.id]"
-                                ng-required="control.required">
+                                ng-min="control.validations.min.value"
+                                ng-max="control.validations.max.value"
+                                ng-required="control.validations.required.value">
 
                             <div ng-if="control.type === 'Link' && control.linkType === 'Asset'">
                                 <input class="form-control"
@@ -125,7 +129,7 @@
                                 <input class="ng-hide"
                                     name="{{:: control.id }}"
                                     ng-model="item[control.id]"
-                                    ng-required="control.required">
+                                    ng-required="control.validations.required.value">
 
                                 <div ng-if="item[control.id].__contentType.indexOf('image') === 0 || item[control.id].type.indexOf('image') === 0">
                                     <img ngf-thumbnail="item[control.id].__url || item[control.id]" width="200">
@@ -145,7 +149,7 @@
                                 name="{{:: control.id }}"
                                 id="{{:: control.id }}"
                                 ng-model="item[control.id]"
-                                ng-required="control.required"
+                                ng-required="control.validations.required.value"
                                 ng-options="option.sys.id as contentTypes[option.sys.contentType.sys.id].name + ' :: ' + option.fields[contentTypes[option.sys.contentType.sys.id].displayField] + ' [' + option.sys.id + ']' for option in control.options">
                                     <option value="">{{:: T.SELECT_VALUE }}</option>
                             </select>
@@ -155,10 +159,22 @@
                                 name="{{:: control.id }}"
                                 id="{{:: control.id }}"
                                 ng-model="item[control.id]"
-                                ng-required="control.required"
+                                ng-required="control.validations.required.value"
                                 ng-options="option.sys.id as contentTypes[option.sys.contentType.sys.id].name + ' :: ' + option.fields[contentTypes[option.sys.contentType.sys.id].displayField] + ' [' + option.sys.id + ']' for option in control.options"
                                 multiple>
                             </select>
+
+                            <span class="help-block"
+                                ng-repeat="(key, value) in control.validations"
+                                ng-if="!form[control.id].$pristine && form[control.id].$error[key]">
+                                {{:: TC(value.message) }}
+                            </span>
+
+                            <!-- <span class="help-block"
+                                ng-if="control.type === 'Link' && control.linkType === 'Asset' && !form.fileFile.$pristine && form.fileFile.$error[key]"
+                                ng-repeat="(key, value) in control.validations">
+                                {{:: value.message }}
+                            </span> -->
                         </div>
                     </div>
 

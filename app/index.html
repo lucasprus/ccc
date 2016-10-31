@@ -120,8 +120,63 @@
                     };
 
                     $http.get('https://api.contentful.com/spaces/in1ws0j2cnhw/content_types?order=name', config).then(function(data) {
+
+                        var contentTypes = data.data.items;
+
+                        contentTypes.forEach(function(contentType) {
+                            contentType.fields.forEach(function(field) {
+                                var validations = {
+                                    required: {
+                                        value: field.required,
+                                        message: 'Required'
+                                    }
+                                };
+
+                                field.validations.forEach(function(validation) {
+                                    if (validation.size) {
+                                        if (validation.size.min) {
+                                            validations.minlength = {
+                                                value: validation.size.min,
+                                                message: validation.message
+                                            };
+                                        }
+
+                                        if (validation.size.max) {
+                                            validations.maxlength = {
+                                                value: validation.size.max,
+                                                message: validation.message
+                                            };
+                                        }
+                                    } else if (validation.range) {
+                                        if (_.isNumber(validation.range.min)) {
+                                            validations.min = {
+                                                value: validation.range.min,
+                                                message: validation.message
+                                            };
+                                        }
+
+                                        if (_.isNumber(validation.range.max)) {
+                                            validations.max = {
+                                                value: validation.range.max,
+                                                message: validation.message
+                                            };
+                                        }
+                                    } else if (validation.regexp) {
+                                        validations.pattern = {
+                                            value: validation.regexp.pattern,
+                                            message: validation.message
+                                        };
+                                    } else if (validation.in) {
+                                        validations.in = validation;
+                                    }
+                                });
+
+                                field.validations = validations;
+                            });
+                        });
+
                         $window.contentfulCustomCmsAppData = {
-                            contentTypes: data.data.items
+                            contentTypes: contentTypes
                         };
 
                         angular.bootstrap(document.body, ['contentfulCustomCmsApp']);
