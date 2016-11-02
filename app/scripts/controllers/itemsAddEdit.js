@@ -85,7 +85,7 @@ angular.module('contentfulCustomCmsApp')
                                                 }
                                             };
                                         });
-                                    }, 3000);
+                                    }, 2000);
                                 });
                             });
                         });

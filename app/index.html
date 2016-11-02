@@ -62,7 +62,7 @@
 
         <div class="footer">
             <div class="container">
-                <p><span class="glyphicon glyphicon-copyright-mark"></span> stanwood GmbH</p>
+                <p><span class="glyphicon glyphicon-copyright-mark"></span> Lukasz Prus Ltd</p>
             </div>
         </div>
 
@@ -115,11 +115,11 @@
                 injector.invoke(['$http', '$window', function($http, $window) {
                     var config = {
                         headers: {
-                            'Authorization': 'Bearer ef7b0d42ac9b1ca71be8137f1c406c6c489d2678ff16135ddea89f75561d3cc1'
+                            'Authorization': 'Bearer 1e8d598435a76638fa3b874712b2a6e57dfd695b3999d83eb798f545b3e822b3'
                         }
                     };
 
-                    $http.get('https://api.contentful.com/spaces/in1ws0j2cnhw/content_types?order=name', config).then(function(data) {
+                    $http.get('https://api.contentful.com/spaces/mtagzvdvtbff/content_types?order=name', config).then(function(data) {
 
                         var contentTypes = data.data.items;
 

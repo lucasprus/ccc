@@ -10,7 +10,7 @@
 angular.module('contentfulCustomCmsApp')
     .constant('DELanguagePack', (function() {
         var translations = {
-            HOME: 'Home [NT]',
+            HOME: 'Home [GER]',
             HELLO: 'Hallo',
             BUYING_SECTION_HEADER: 'Kaufen',
             SELLING_SECTION_HEADER: 'Verkaufen',
@@ -20,7 +20,7 @@ angular.module('contentfulCustomCmsApp')
             LOG_IN: 'Anmelden',
             PROFILE: 'Profil',
             PURCHASES: 'Käufe',
-            NO_PURCHASES: 'No purchases [NT]',
+            NO_PURCHASES: 'No purchases [GER]',
             DELIVERIES: 'Lieferungen',
             PAYMENTS: 'Verkäufe',
             LOG_OUT: 'Abmelden',
@@ -89,8 +89,8 @@ angular.module('contentfulCustomCmsApp')
             ordering: 'Sortierung',
             isActive: 'Ist aktiv',
             isOrganic: 'Ist bio',
-            isVegan: 'Is vegan [NT]',
-            isGlutenFree: 'Is gluten free [NT]',
+            isVegan: 'Is vegan [GER]',
+            isGlutenFree: 'Is gluten free [GER]',
             category: 'Kategory',
             imageUrl: 'Bild URL',
             image: 'Bild',
@@ -124,7 +124,7 @@ angular.module('contentfulCustomCmsApp')
             deliveryOptions: 'Lieferoptionen',
             product: 'Produkt',
             productId: 'Produkt',
-            id: 'Identifier [NT]',
+            id: 'Identifier [GER]',
             purchaseStatus: 'Status Verkauf',
             latestDeliveryDate: 'Spätestes Lieferdatum',
             count: 'Anzahl',
@@ -140,8 +140,8 @@ angular.module('contentfulCustomCmsApp')
             usersPlural: 'Nutzer',
             itemsSingle: 'Einheit',
             itemsPlural: 'Einheiten',
-            meSingle: 'me [NT]',
-            myCompanySingle: 'my company [NT]',
+            meSingle: 'me [GER]',
+            myCompanySingle: 'my company [GER]',
             buyer: 'Käufer',
             activeProductsSingle: 'aktives Produkt',
             activeProductsPlural: 'aktive Produkte',
@@ -161,7 +161,7 @@ angular.module('contentfulCustomCmsApp')
             FIRST_NAME: 'Vorname',
             LAST_NAME: 'Nachname',
             BUSINESS_LICENSE: 'Gewerbeschein',
-            PDF_LICENSE: 'PDF License [NT]',
+            PDF_LICENSE: 'PDF License [GER]',
             SELLER_DECLARE: 'Auch Verkäufer',
             BUYER: 'Käufer',
             SELLER: 'Verkäufer',
@@ -200,7 +200,7 @@ angular.module('contentfulCustomCmsApp')
             DELIVERY_FEE: 'Liefergebühr',
             DELIVERY_TOTAL: 'Lieferkosten gesamt',
             DELIVERY_ADDRESS: 'Lieferadresse',
-            SAVED_ADDRESS: 'Saved address [NT]',
+            SAVED_ADDRESS: 'Saved address [GER]',
 
             REGISTRATION_CONFIRMATION: 'Vielen Dank für Ihre Registrierung. Sie erhalten gleich eine E-Mail. Bitte klicken Sie auf den Bestätigungslink, um die Registrierung abzuschließen.',
 
@@ -266,7 +266,7 @@ angular.module('contentfulCustomCmsApp')
             // 404 page
             PAGE_NOT_FOUND: 'Seite nicht gefunden',
             BACK_TO_MAIN_PAGE: 'Zurück zur Startseite',
-            PAGE_NOT_EXIST: 'The page doesn\'t exist or you don\'t have access permission to view it [NT]',
+            PAGE_NOT_EXIST: 'The page doesn\'t exist or you don\'t have access permission to view it [GER]',
 
             // Password reset
             FORGOT_YOUR_PASSWORD: 'Passwort vergessen',
@@ -283,8 +283,8 @@ angular.module('contentfulCustomCmsApp')
             STATUS: 'Status',
 
             // Profile
-            me: 'Me [NT]',
-            myCompany: 'My company [NT]',
+            me: 'Me [GER]',
+            myCompany: 'My company [GER]',
 
             // Verify email
             VERIFY_EMAIL_SUCCESS: 'Ihre E-Mail-Adresse wurde erfolgreich bestätigt.',
@@ -301,48 +301,48 @@ angular.module('contentfulCustomCmsApp')
 
             // Order confirmation
             ORDER_CONFIRMATION: 'Vielen Dank für Ihren Einkauf!',
-            ORDER_NUMBER: 'Order number [NT]',
-            ORDER_EMAIL_CONFIRMATION: 'Order details will be sent to your email shortly [NT]',
-            BILLING_ADDRESS: 'Billing address [NT]',
-            PRODUCTS_AND_DELIVERY: 'Products and delivery [NT]',
-            TO: 'to [NT]',
-            PRODUCTS_TOTAL: 'Products total [NT]',
-            ORDER_TOTAL: 'Order total [NT]',
+            ORDER_NUMBER: 'Order number [GER]',
+            ORDER_EMAIL_CONFIRMATION: 'Order details will be sent to your email shortly [GER]',
+            BILLING_ADDRESS: 'Billing address [GER]',
+            PRODUCTS_AND_DELIVERY: 'Products and delivery [GER]',
+            TO: 'to [GER]',
+            PRODUCTS_TOTAL: 'Products total [GER]',
+            ORDER_TOTAL: 'Order total [GER]',
 
             // Form controls
-            SELECT_VALUE: '-- select value -- [NT]',
+            SELECT_VALUE: '-- select value -- [GER]',
 
             // Items add modal
-            ADD_ITEMS_AFTER_PRODUCT_ADD: 'Would you like to add items for this product? [NT]',
+            ADD_ITEMS_AFTER_PRODUCT_ADD: 'Would you like to add items for this product? [GER]',
 
             // Admin overview
-            ACTIVE_USERS: 'Active users [NT]',
-            SALES: 'Sales [NT]',
-            PODUCTS_ON_SALE: 'Products on sale [NT]',
-            SELLERS: 'Sellers [NT]',
-            BUYERS: 'Buyers [NT]',
-            LAST_7_DAYS: 'Last 7 days [NT]',
-            LAST_30_DAYS: 'Last 30 days [NT]',
-            YESTERDAY: 'yesterday [NT]',
-            PREVIOUS_PERIOD: 'previous period [NT]',
-            NO_CHANGE: 'No change [NT]',
+            ACTIVE_USERS: 'Active users [GER]',
+            SALES: 'Sales [GER]',
+            PODUCTS_ON_SALE: 'Products on sale [GER]',
+            SELLERS: 'Sellers [GER]',
+            BUYERS: 'Buyers [GER]',
+            LAST_7_DAYS: 'Last 7 days [GER]',
+            LAST_30_DAYS: 'Last 30 days [GER]',
+            YESTERDAY: 'yesterday [GER]',
+            PREVIOUS_PERIOD: 'previous period [GER]',
+            NO_CHANGE: 'No change [GER]',
 
             // Product characteristics
-            ORGANIC: 'Organic [NT]',
-            VEGAN: 'Vegan [NT]',
-            SUGAR_FREE: 'Sugar free [NT]',
-            GLUTEN_FREE: 'Gluten free [NT]',
-            GMO_FREE: 'GMO free [NT]',
+            ORGANIC: 'Organic [GER]',
+            VEGAN: 'Vegan [GER]',
+            SUGAR_FREE: 'Sugar free [GER]',
+            GLUTEN_FREE: 'Gluten free [GER]',
+            GMO_FREE: 'GMO free [GER]',
 
             // Drag and drop file upload
-            DRAG_AND_DROP: 'Or drag and drop file here [NT]',
-            BROWSE: 'Browse [NT]',
+            DRAG_AND_DROP: 'Or drag and drop file here [GER]',
+            BROWSE: 'Browse [GER]',
 
             // File download
-            DOWNLOAD: 'Download [NT]',
+            DOWNLOAD: 'Download [GER]',
 
-            LATITUDE: 'Latitude [NT]',
-            LONGITUDE: 'Longitude [NT]',
+            LATITUDE: 'Latitude [GER]',
+            LONGITUDE: 'Longitude [GER]',
 
             validation: {
                 required: 'Erforderlich',
@@ -351,10 +351,10 @@ angular.module('contentfulCustomCmsApp')
                     ln: 'Nur Buchstaben und Ziffern zulässig',
                     lnsc: 'Nur Buchstaben, Ziffern, Leerzeichen und Kommas zulässig',
                     lnscda: 'Nur Buchstaben, Ziffern, Leerzeichen, Kommas und Punkte zulässig.',
-                    lnscdad: 'Only letters, numbers, spaces, commas, dots, ampersands and dashes allowed [NT]',
+                    lnscdad: 'Only letters, numbers, spaces, commas, dots, ampersands and dashes allowed [GER]',
                     ean8: 'EAN8 muss 8 Ziffern haben',
                     ean13: 'EAN13 muss 13 ziffern haben',
-                    zip: 'ZIP has to be 5 digits long [NT]',
+                    zip: 'ZIP has to be 5 digits long [GER]',
                     password: 'Passwort muss 8-20 Zeichen lang sein, einen kleinen, einen großen Buchstaben und eine Zahl beinhalten',
                     image: 'Nur Bild-Dateien zulässig',
                     imageOrPdf: 'Nur Bilder und PDFs zulässig'
@@ -394,7 +394,7 @@ angular.module('contentfulCustomCmsApp')
 
             'buying.categories': 'Kategorie',
             'buying.products': 'Produkt',
-            'buying.characteristics': 'Characteristic [NT]',
+            'buying.characteristics': 'Characteristic [GER]',
             'buying.search': 'Suchergebnisse',
             'buying.seller': 'Verkäufer'
         };
@@ -418,8 +418,8 @@ angular.module('contentfulCustomCmsApp')
         });
 
         var profileSections = {
-            me: 'Me [NT]',
-            myCompany: 'My company [NT]'
+            me: 'Me [GER]',
+            myCompany: 'My company [GER]'
         };
 
         _.forEach(profileSections, function(name, key) {

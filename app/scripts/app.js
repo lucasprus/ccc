@@ -21,9 +21,9 @@ angular
     ])
     .constant('CONFIG', {
         // Content management API URL
-        cmApiUrl: 'https://api.contentful.com/spaces/in1ws0j2cnhw/',
+        cmApiUrl: 'https://api.contentful.com/spaces/mtagzvdvtbff/',
         // Content delivery API URL
-        cdApiUrl: 'https://cdn.contentful.com/spaces/in1ws0j2cnhw/',
+        cdApiUrl: 'https://cdn.contentful.com/spaces/mtagzvdvtbff/',
         // File upload URL
         uploadUrl: 'https://meck-schweizer-dev.appspot.com/',
         paginationResultsPerPage: 5,
@@ -34,9 +34,9 @@ angular
             return {
                 request: function(config) {
                     if (config.url.indexOf('api.contentful.com') > -1) {
-                        config.headers.Authorization = 'Bearer ef7b0d42ac9b1ca71be8137f1c406c6c489d2678ff16135ddea89f75561d3cc1';
+                        config.headers.Authorization = 'Bearer 1e8d598435a76638fa3b874712b2a6e57dfd695b3999d83eb798f545b3e822b3';
                     } else if (config.url.indexOf('cdn.contentful.com') > -1) {
-                        config.headers.Authorization = 'Bearer 65b166a614d28895f64a03f6268f03f052421598fd950bc576982d6ca71486b0';
+                        config.headers.Authorization = 'Bearer 5ff5442d5e7269dc9f4a6d73840070b265ddb97589486d78de7e7d77e6c011a2';
                     }
 
                     return config;
